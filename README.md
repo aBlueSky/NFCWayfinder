@@ -1,12 +1,19 @@
 # NFCWayfinder
 A term project for our mobile application development class, specifically with Android development.
 
-## Installation
-_TBA_
+## Contributing
+_Using Source Tree & Android Studio_
+1. Version control(Source Tree: `Git`)
+  1. `New Repository` > `Clone Repository` > _Add the URL_ > `Clone`
+  2. Ensure that you have selected the correct branch to work in (See the **Branches** section below).
+    * Create a pull request if you need to get a copy of the current master version. 
+2. Android Studio
+  1. `Open Android Studio` > `Open an Existing Android Studio Project` > _Navigate to the local repository created above_ > `Open`
 
-## Branches
-* master: merge all changes from the `nightly/X` branches.
-* nightly/X: personal branches
+###### Branches
+* master: *merge* all changes from the `nightly/X` branches.
+* nightly/X: personal branches. 
+  * *Commit* here.
 * stable: last working version of `master` (to ensure there is always a working version).
 
 ## Resources
