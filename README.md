@@ -21,3 +21,4 @@ _Using Source Tree & Android Studio_
 1. [Firebase, web server](https://www.firebase.com/docs/android/quickstart.html "Firebase") 
 2. [Balsamiq, UI prototyping tool](https://balsamiq.com/products/mockups/ "Balsamiq") 
 3. [Dr. Cook's Github Account](https://github.com/cpaulcook "Dr. Cook") 
+4. [Android NFC Quick Tutorial](http://www.survivingwithandroid.com/2015/03/nfc-in-android-ndef.html "NFC Tutorial")
