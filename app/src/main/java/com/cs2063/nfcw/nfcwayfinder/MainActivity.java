@@ -71,6 +71,7 @@ public class MainActivity extends Activity
     public void onNewIntent(Intent intent)
     {
         Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
-        mText.setText("Discovered tag " + ++mCount + " with intent: " + intent);
+        if((mText = (TextView) findViewById(R.id.nfcTagText)) != null)
+            mText.setText("Discovered tag " + ++mCount + " with intent: " + intent);
     }
 }
