@@ -10,6 +10,7 @@
     tools:context="com.cs2063.nfcw.nfcwayfinder.MainActivity"
     android:orientation="horizontal">
 
+<<<<<<< HEAD
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,3 +23,6 @@
         android:text="Button 2"
         android:id="@+id/button2" />
 </LinearLayout>
+=======
+</RelativeLayout>
+>>>>>>> cb08f6c7f1a010f477640750fa3b78b0e68b93ee
