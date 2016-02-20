@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NFCWayfinder</string>
+    <string name="json">{
+  "complexes": [
+        {"complex":\"Head Hall Complex\",
+      "building":\"Information Technology Center\",
+      "level":\"d level = 4th floor\",
+      "roomNumber":
+      \"414\"}
+  ]
+}</string>
 </resources>

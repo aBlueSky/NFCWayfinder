@@ -9,6 +9,9 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    private PendingIntent nfcPendingIntent;
+    private IntentFilter[]  intentFiltersArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
