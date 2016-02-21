@@ -1,6 +1,7 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  * Created by Drew on 20/02/2016.
  */
 public class DataModel {
-
+    private static final String TAG = "DataModel";
     private ArrayList<Complex> complexesArray = new ArrayList<>();
     private Context context;
 
@@ -29,11 +30,13 @@ public class DataModel {
     }
 
     private void getJSON() {
+        Log.d(TAG, "getJSON() called.");
         BufferedReader br = null;
         StringBuffer sb = new StringBuffer();
 
         try {
-            br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(this.context.getString(R.string.json).getBytes())));
+            br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(this.context
+                    .getString(R.string.json2).getBytes())));
             String temp;
             while ((temp = br.readLine()) != null) {
                 sb.append(temp);
@@ -53,8 +56,10 @@ public class DataModel {
     }
 
     private void processJSON(StringBuffer sb) {
+        Log.d(TAG, "processJSON() called.");
         String jsonString = sb.toString();
-
+        Log.d(TAG, "JSON: "+jsonString);
+        MainActivity.setmJSONText(jsonString);
         // Finally, parse resultant JSON
         try {
 
@@ -81,7 +86,16 @@ public class DataModel {
 
                 // Add new Complex to complexes ArrayList
                 complexesArray.add(complex);
+                Log.d(TAG, "[complex:"+complex.complex+"; building:"+complex
+                        .building+"; level:"+complex.level+"; room:"+complex.roomNumber+"]");
             }
+            StringBuffer buffer = new StringBuffer();
+            for (Complex c:getComplexes())
+            {
+                buffer.append("[complex:"+c.complex+"; building:"+c.building+"; level:"+c.level+
+                        "; room:"+c.roomNumber+"]\n");
+            }
+            MainActivity.setmJSONDecodedText(buffer.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +25,20 @@ public class MainActivity extends Activity
     private PendingIntent nfcPendingIntent;
     private IntentFilter[]  intentFiltersArray;
     private String[][] mTechLists;//what is mTechLists for?
-    private TextView mText;
-    private int mCount = 0;
+    private static TextView mText;
+    private static TextView mJSONText;
+    private static TextView mJSONDecodedText;
+    private static int mCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate() called.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mText = (TextView) findViewById(R.id.nfcTagText);
+        mJSONText = (TextView) findViewById(R.id.jsonText);
+        mJSONDecodedText = (TextView) findViewById(R.id.jsonDecodedText);
 
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Create a generic PendingIntent that will be deliver to this activity. The NFC stack
@@ -52,6 +60,9 @@ public class MainActivity extends Activity
 
         // Setup a tech list for all NfcF tags
         mTechLists = new String[][] { new String[] { NfcF.class.getName() } };
+
+        //debug datamodel
+        DataModel dataModel = new DataModel(this.getApplicationContext());
     }
 
     @Override
@@ -71,7 +82,7 @@ public class MainActivity extends Activity
         if(intent == null) return; //Not actually an intent, dismiss.
 
         String action = intent.getAction();
-        Log.d(TAG, "Action: "+action);
+        Log.d(TAG, "Action: " + action);
         if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action))
         {
             Log.d(TAG, "Action-NDEF-Discovered.");
@@ -122,8 +133,18 @@ public class MainActivity extends Activity
     public void onNewIntent(Intent intent)
     {
         Log.i("Foreground dispatch", "Discovered tag with intent: " + intent);
-        if((mText = (TextView) findViewById(R.id.nfcTagText)) != null)
-            mText.setText("Discovered tag " + ++mCount + " with intent: " + intent);
         handleIntent(intent);
+    }
+    public static void setTextPreview(String str)
+    {
+        if(mText != null) mText.setText("Discovered tag " + ++ mCount + " with intent: " + str);
+    }
+    public static void setmJSONText(String str)
+    {
+        if(mJSONText != null) mJSONText.setText(str);
+    }
+    public static void setmJSONDecodedText(String str)
+    {
+        if(mJSONDecodedText != null) mJSONDecodedText.setText(str);
     }
 }

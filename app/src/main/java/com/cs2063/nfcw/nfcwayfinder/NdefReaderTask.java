@@ -53,6 +53,8 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String>
         if(result != null)
         {
             Log.d(TAG, "Read content: " + result);
+            MainActivity.setTextPreview(result);
+
         }
     }
 
