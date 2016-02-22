@@ -2,6 +2,7 @@ package com.cs2063.nfcw.nfcwayfinder;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
@@ -12,8 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends Activity
 {
@@ -24,11 +30,11 @@ public class MainActivity extends Activity
     private IntentFilter[] intentFiltersArray;
     private String[][] mTechLists;//what is mTechLists for?
     private View rv;
+    private DataModel dataModel;
 
     //Debug text views for preview of JSON and NFC operations.
     private static TextView mText;
     private static TextView mJSONText;
-    private static TextView mJSONDecodedText;
     private static int mCount = 0;
 
     @Override
@@ -38,13 +44,8 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rv = findViewById(R.id.room_list);
-        assert rv != null;
-        setupRecyclerView((RecyclerView) rv);
-
         mText = (TextView) findViewById(R.id.nfcTagText);
-        mJSONText = (TextView) findViewById(R.id.jsonText);
-        mJSONDecodedText = (TextView) findViewById(R.id.jsonDecodedText);
+        //mJSONText = (TextView) findViewById(R.id.jsonText);
 
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Create a generic PendingIntent that will be deliver to this activity. The NFC stack
@@ -71,7 +72,12 @@ public class MainActivity extends Activity
         mTechLists = new String[][]{new String[]{NfcF.class.getName()}};
 
         //debug datamodel
-        DataModel dataModel = new DataModel(this.getApplicationContext());
+        dataModel = new DataModel(this.getApplicationContext());
+
+        //Setup debug recyclerview
+        rv = findViewById(R.id.room_list);
+        assert rv != null;
+        setupRecyclerView((RecyclerView) rv);
     }
 
     @Override
@@ -151,16 +157,6 @@ public class MainActivity extends Activity
     public static void setTextPreview(String str)
     {
         if (mText != null) mText.setText("Discovered tag " + ++mCount + " with intent: " + str);
-    }
-
-    public static void setmJSONText(String str)
-    {
-        if (mJSONText != null) mJSONText.setText(str);
-    }
-
-    public static void setmJSONDecodedText(String str)
-    {
-        if (mJSONDecodedText != null) mJSONDecodedText.setText(str);
     }
 
     private void setupRecyclerView(RecyclerView rv)

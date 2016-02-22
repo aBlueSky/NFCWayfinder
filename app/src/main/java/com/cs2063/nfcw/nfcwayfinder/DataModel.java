@@ -26,6 +26,7 @@ public class DataModel {
 
         this.context = context;
 
+        //TODO: Without this line, recyclerview will not load, need to remove/make static?
         getJSON();
     }
 
@@ -59,8 +60,7 @@ public class DataModel {
         Log.d(TAG, "processJSON() called.");
         String jsonString = sb.toString();
         Log.d(TAG, "JSON: "+jsonString);
-        MainActivity.setmJSONText(jsonString);
-        // Finally, parse resultant JSON
+        //MainActivity.setmJSONText(jsonString);
         try {
 
             // Create a JSON Object from file contents String
@@ -90,19 +90,10 @@ public class DataModel {
                 Log.d(TAG, "[complex:"+ room.complex+"; building:"+ room
                         .building+"; level:"+ room.level+"; room:"+ room.roomNumber+"]");
             }
-            StringBuffer buffer = new StringBuffer();
-            for (Room c:getComplexes())
-            {
-                buffer.append("[complex:"+c.complex+"; building:"+c.building+"; level:"+c.level+
-                        "; room:"+c.roomNumber+"]\n");
-            }
-            MainActivity.setmJSONDecodedText(buffer.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
-
 
     // Getter method for complexes ArrayList
     public ArrayList<Room> getComplexes() { return roomArray; }

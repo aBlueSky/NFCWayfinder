@@ -1,23 +1,28 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 /**
  * Created by Koves on 2/21/2016.
  */
+//TODO: Move RoomContent to here, so that notifyDataSetChanged() and notifyItemRemoved(position)
+// notifyItemRangeChanged(position, list.size()) can be used for dynamic list.
 public class RoomRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder>
 {
     private static final String TAG = "RoomRecyclerViewAdapter";
     private final List<Room> mValues;
-    public RoomRecyclerViewAdapter(List<Room> items) {
+    public RoomRecyclerViewAdapter(List<Room> items)
+    {
         mValues = items;
     }
 
@@ -32,7 +37,8 @@ public class RoomRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getRoomNumber());
-        holder.mContentView.setText(mValues.get(position).getCondensedFields());
+        holder.mCondensedFieldView.setText(mValues.get(position).getCondensedFields());
+        holder.mComplexView.setText(mValues.get(position).getComplex());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +61,9 @@ public class RoomRecyclerViewAdapter extends
                     context.startActivity(intent);
                 }
                 */
+
+                //Toast.makeText(v.getApplicationContext(), "Clicked a room item!", Toast
+                // .LENGTH_SHORT);
             }
         });
     }
@@ -67,19 +76,21 @@ public class RoomRecyclerViewAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView mCondensedFieldView;
+        public final TextView mComplexView;
         public Room mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mCondensedFieldView = (TextView) view.findViewById(R.id.content);
+            mComplexView = (TextView) view.findViewById(R.id.complex);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mCondensedFieldView.getText() + "'";
         }
     }
 }

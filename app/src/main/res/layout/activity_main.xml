@@ -23,20 +23,15 @@
         android:text="Placeholder of NFC Tag."
         android:id="@+id/nfcTagText"
         android:background="#91c9f1"/>
-
+    <!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="JSON placeholder."
         android:id="@+id/jsonText"
-        android:background="#f18989"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Complex Array placeholder."
-        android:id="@+id/jsonDecodedText"
-        android:background="#a1e3ce"/>
+        android:background="#f18989"
+        android:visibility="invisible"/>
+    -->
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

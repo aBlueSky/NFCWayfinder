@@ -29,7 +29,6 @@ public class Room
 
     public String getCondensedFields()
     {
-        return "[complex:"+complex+"; building:"+building+"; level:"+level+
-                "; room:"+roomNumber+"]";
+        return "[complex:"+complex+"; building:"+building+"; level:"+level+"]";
     }
 }

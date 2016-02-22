@@ -54,7 +54,7 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String>
         {
             Log.d(TAG, "Read content: " + result);
             MainActivity.setTextPreview(result);
-
+            //TODO: Set location based on this.
         }
     }
 
