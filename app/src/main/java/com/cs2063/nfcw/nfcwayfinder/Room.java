@@ -3,16 +3,17 @@ package com.cs2063.nfcw.nfcwayfinder;
 /**
  * Created by Drew on 20/02/2016.
  */
-public class Complex {
+public class Room
+{
 
-    // Complex attributes
+    // Room attributes
     String complex = "None";
     String building = "None";
     String level = "None";
     String roomNumber = "None";
 
     // Empty Constructor
-    public Complex() {
+    public Room() {
 
     }
 
@@ -25,4 +26,10 @@ public class Complex {
     public String getLevel() { return level; }
 
     public String getRoomNumber() { return roomNumber; }
+
+    public String getCondensedFields()
+    {
+        return "[complex:"+complex+"; building:"+building+"; level:"+level+
+                "; room:"+roomNumber+"]";
+    }
 }

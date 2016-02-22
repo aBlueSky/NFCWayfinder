@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class DataModel {
     private static final String TAG = "DataModel";
-    private ArrayList<Complex> complexesArray = new ArrayList<>();
+    private ArrayList<Room> roomArray = new ArrayList<>();
     private Context context;
 
     // Initializer to read our data source (JSON file) into an array of complex objects
@@ -75,22 +75,23 @@ public class DataModel {
                 // Create a JSON Object from individual JSON Array element
                 JSONObject elementObject = jsonArray.getJSONObject(i);
 
-                // Create a Complex Object to contain JSON Object data
-                Complex complex = new Complex();
+                // Create a Room Object to contain JSON Object data
+                Room room = new Room();
 
-                // Get data from individual JSON Object and store to Complex Object
-                complex.complex = elementObject.getString("complex");
-                complex.building = elementObject.getString("building");
-                complex.level = elementObject.getString("level");
-                complex.roomNumber = elementObject.getString("roomNumber");
+                // Get data from individual JSON Object and store to Room Object
+                room.complex = elementObject.getString("complex");
+                room.building = elementObject.getString("building");
+                room.level = elementObject.getString("level");
+                room.roomNumber = elementObject.getString("roomNumber");
 
-                // Add new Complex to complexes ArrayList
-                complexesArray.add(complex);
-                Log.d(TAG, "[complex:"+complex.complex+"; building:"+complex
-                        .building+"; level:"+complex.level+"; room:"+complex.roomNumber+"]");
+                // Add new Room to complexes ArrayList
+                roomArray.add(room);
+                RoomContent.addItem(room);
+                Log.d(TAG, "[complex:"+ room.complex+"; building:"+ room
+                        .building+"; level:"+ room.level+"; room:"+ room.roomNumber+"]");
             }
             StringBuffer buffer = new StringBuffer();
-            for (Complex c:getComplexes())
+            for (Room c:getComplexes())
             {
                 buffer.append("[complex:"+c.complex+"; building:"+c.building+"; level:"+c.level+
                         "; room:"+c.roomNumber+"]\n");
@@ -104,5 +105,5 @@ public class DataModel {
 
 
     // Getter method for complexes ArrayList
-    public ArrayList<Complex> getComplexes() { return complexesArray; }
+    public ArrayList<Room> getComplexes() { return roomArray; }
 }
