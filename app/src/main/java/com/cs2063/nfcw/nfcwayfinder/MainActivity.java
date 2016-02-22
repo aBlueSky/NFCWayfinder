@@ -30,12 +30,14 @@ public class MainActivity extends Activity
     private IntentFilter[] intentFiltersArray;
     private String[][] mTechLists;//what is mTechLists for?
     private View rv;
-    private DataModel dataModel;
 
     //Debug text views for preview of JSON and NFC operations.
     private static TextView mText;
     private static TextView mJSONText;
     private static int mCount = 0;
+
+    //Bad practice
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +45,8 @@ public class MainActivity extends Activity
         Log.i(TAG, "onCreate() called.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = getApplicationContext();
 
         mText = (TextView) findViewById(R.id.nfcTagText);
         //mJSONText = (TextView) findViewById(R.id.jsonText);
@@ -70,9 +74,6 @@ public class MainActivity extends Activity
 
         // Setup a tech list for all NfcF tags
         mTechLists = new String[][]{new String[]{NfcF.class.getName()}};
-
-        //debug datamodel
-        dataModel = new DataModel(this.getApplicationContext());
 
         //Setup debug recyclerview
         rv = findViewById(R.id.room_list);
@@ -157,6 +158,7 @@ public class MainActivity extends Activity
     public static void setTextPreview(String str)
     {
         if (mText != null) mText.setText("Discovered tag " + ++mCount + " with intent: " + str);
+        DataModel.getJSON(context);
     }
 
     private void setupRecyclerView(RecyclerView rv)

@@ -17,6 +17,11 @@ public class Room
 
     }
 
+    public Room(String id)
+    {
+        roomNumber = id;
+    }
+
     public String getComplex() { return complex; }
 
     public String getBuilding() {

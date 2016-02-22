@@ -18,25 +18,15 @@ import java.util.ArrayList;
  */
 public class DataModel {
     private static final String TAG = "DataModel";
-    private ArrayList<Room> roomArray = new ArrayList<>();
-    private Context context;
+    private static ArrayList<Room> roomArray = new ArrayList<>();
 
-    // Initializer to read our data source (JSON file) into an array of complex objects
-    public DataModel(Context context) {
-
-        this.context = context;
-
-        //TODO: Without this line, recyclerview will not load, need to remove/make static?
-        getJSON();
-    }
-
-    private void getJSON() {
+    public static void getJSON(Context context) {
         Log.d(TAG, "getJSON() called.");
         BufferedReader br = null;
         StringBuffer sb = new StringBuffer();
 
         try {
-            br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(this.context
+            br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(context
                     .getString(R.string.json2).getBytes())));
             String temp;
             while ((temp = br.readLine()) != null) {
@@ -56,7 +46,7 @@ public class DataModel {
         processJSON(sb);
     }
 
-    private void processJSON(StringBuffer sb) {
+    private static void processJSON(StringBuffer sb) {
         Log.d(TAG, "processJSON() called.");
         String jsonString = sb.toString();
         Log.d(TAG, "JSON: "+jsonString);
@@ -96,5 +86,5 @@ public class DataModel {
     }
 
     // Getter method for complexes ArrayList
-    public ArrayList<Room> getComplexes() { return roomArray; }
+    public static ArrayList<Room> getComplexes() { return roomArray; }
 }
