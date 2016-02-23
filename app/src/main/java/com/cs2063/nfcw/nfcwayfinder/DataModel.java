@@ -12,6 +12,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Drew on 20/02/2016.
@@ -60,6 +61,8 @@ public class DataModel {
             // This array is the "complexes" array
             JSONArray jsonArray = jsonObject.getJSONArray("complexes");
 
+            //clear previous entries in ArrayList.
+            roomArray.clear();
             for (int i=0; i < jsonArray.length(); i++) {
 
                 // Create a JSON Object from individual JSON Array element
@@ -74,17 +77,19 @@ public class DataModel {
                 room.level = elementObject.getString("level");
                 room.roomNumber = elementObject.getString("roomNumber");
 
-                // Add new Room to complexes ArrayList
+                // Add new Room to ArrayList
                 roomArray.add(room);
-                RoomContent.addItem(room);
                 Log.d(TAG, "[complex:"+ room.complex+"; building:"+ room
                         .building+"; level:"+ room.level+"; room:"+ room.roomNumber+"]");
             }
+
+            //Now that all records were added to temp list, sort.
+            Collections.sort(roomArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     // Getter method for complexes ArrayList
-    public static ArrayList<Room> getComplexes() { return roomArray; }
+    public static ArrayList<Room> getRooms() { return roomArray; }
 }

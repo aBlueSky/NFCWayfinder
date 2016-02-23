@@ -26,6 +26,13 @@ public class RoomRecyclerViewAdapter extends
         mValues = items;
     }
 
+    public void swap(List<Room> rooms)
+    {
+        mValues.clear();
+        mValues.addAll(rooms);
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -61,9 +68,6 @@ public class RoomRecyclerViewAdapter extends
                     context.startActivity(intent);
                 }
                 */
-
-                //Toast.makeText(v.getApplicationContext(), "Clicked a room item!", Toast
-                // .LENGTH_SHORT);
             }
         });
     }

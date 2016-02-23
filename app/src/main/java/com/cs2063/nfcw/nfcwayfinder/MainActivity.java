@@ -30,6 +30,7 @@ public class MainActivity extends Activity
     private IntentFilter[] intentFiltersArray;
     private String[][] mTechLists;//what is mTechLists for?
     private View rv;
+    private static RoomRecyclerViewAdapter rvAdapter;
 
     //Debug text views for preview of JSON and NFC operations.
     private static TextView mText;
@@ -155,16 +156,17 @@ public class MainActivity extends Activity
         handleIntent(intent);
     }
 
-    public static void setTextPreview(String str)
+    public static void handleNFCPayload(String nfcTagContent)
     {
-        if (mText != null) mText.setText("Discovered tag " + ++mCount + " with intent: " + str);
-        DataModel.getJSON(context);
+        if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
+        DataModel.getJSON(context);//TODO Scan JSON based on building in result.
+        rvAdapter.swap(DataModel.getRooms());//Notify new JSON was loaded from DataModel.
     }
 
     private void setupRecyclerView(RecyclerView rv)
     {
         Log.d(TAG, "setupRecyclerView() called.");
-        rv.setAdapter(new RoomRecyclerViewAdapter(RoomContent.ITEMS));
+        rv.setAdapter(rvAdapter = new RoomRecyclerViewAdapter(RoomContent.ITEMS));
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
 }

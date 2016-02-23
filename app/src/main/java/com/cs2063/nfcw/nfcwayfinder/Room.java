@@ -3,7 +3,7 @@ package com.cs2063.nfcw.nfcwayfinder;
 /**
  * Created by Drew on 20/02/2016.
  */
-public class Room
+public class Room implements Comparable
 {
 
     // Room attributes
@@ -13,9 +13,7 @@ public class Room
     String roomNumber = "None";
 
     // Empty Constructor
-    public Room() {
-
-    }
+    public Room() {}
 
     public Room(String id)
     {
@@ -35,5 +33,13 @@ public class Room
     public String getCondensedFields()
     {
         return "[complex:"+complex+"; building:"+building+"; level:"+level+"]";
+    }
+
+    @Override
+    public int compareTo(Object room) {
+        if(this.roomNumber == ((Room)room).roomNumber)
+            return 0;
+        else
+            return Integer.parseInt(this.roomNumber) > Integer.parseInt(((Room)room).roomNumber) ? 1 : -1;
     }
 }
