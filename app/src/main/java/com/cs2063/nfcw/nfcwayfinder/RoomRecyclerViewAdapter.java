@@ -14,8 +14,6 @@ import java.util.List;
 /**
  * Created by Koves on 2/21/2016.
  */
-//TODO: Move RoomContent to here, so that notifyDataSetChanged() and notifyItemRemoved(position)
-// notifyItemRangeChanged(position, list.size()) can be used for dynamic list.
 public class RoomRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder>
 {

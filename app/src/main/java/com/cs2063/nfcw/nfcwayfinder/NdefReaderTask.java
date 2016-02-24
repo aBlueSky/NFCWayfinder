@@ -17,6 +17,13 @@ import java.util.Arrays;
 public class NdefReaderTask extends AsyncTask<Tag, Void, String>
 {
     public static final String TAG = "NdefReaderTask";
+    MainActivity mainActivity;
+
+    public NdefReaderTask(MainActivity activity)
+    {
+        super();
+        mainActivity = activity;
+    }
 
     @Override
     protected String doInBackground(Tag... params)
@@ -54,7 +61,8 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String>
         if(result != null)
         {
             Log.d(TAG, "Read content: " + result);
-            MainActivity.handleNFCPayload(result);
+
+            mainActivity.handleNFCPayload(result);
             //TODO: Set location based on this.
         }
     }

@@ -17,11 +17,21 @@ import java.util.Collections;
 /**
  * Created by Drew on 20/02/2016.
  */
-public class DataModel {
-    private static final String TAG = "DataModel";
-    private static ArrayList<Room> roomArray = new ArrayList<>();
+public class RoomDataModel
+{
+    private static final String TAG = "RoomDataModel";
+    private ArrayList<Room> roomArray;
+    private static Context context;
 
-    public static void getJSON(Context context) {
+    public RoomDataModel(Context context)
+    {
+        Log.d(TAG, "object created.");
+        roomArray = new ArrayList<>();
+        this.context = context;
+    }
+
+    //TODO Give to FIREBASE MANAGER class
+    public void getJSON() {
         Log.d(TAG, "getJSON() called.");
         BufferedReader br = null;
         StringBuffer sb = new StringBuffer();
@@ -47,11 +57,10 @@ public class DataModel {
         processJSON(sb);
     }
 
-    private static void processJSON(StringBuffer sb) {
+    private void processJSON(StringBuffer sb) {
         Log.d(TAG, "processJSON() called.");
         String jsonString = sb.toString();
-        Log.d(TAG, "JSON: "+jsonString);
-        //MainActivity.setmJSONText(jsonString);
+        Log.d(TAG, "processJSON() called; JSON: "+jsonString);
         try {
 
             // Create a JSON Object from file contents String
@@ -91,5 +100,5 @@ public class DataModel {
     }
 
     // Getter method for complexes ArrayList
-    public static ArrayList<Room> getRooms() { return roomArray; }
+    public ArrayList<Room> getRooms() { return roomArray; }
 }

@@ -11,7 +11,17 @@ import android.util.Log;
 public class FirebaseManager
 {
     private final static String TAG = "FirebaseManager";
-    //private static Firebase firebase = new Firebase("https://nfcwayfinder.firebaseio.com/");
+    //private Firebase firebase;
+
+    public FirebaseManager()
+    {
+        //firebase = new Firebase("https://nfcwayfinder.firebaseio.com/");
+    }
+    public FirebaseManager(Context context)
+    {
+        //firebase = new Firebase("https://nfcwayfinder.firebaseio.com/");
+        //Firebase.setAndroidContext(context);
+    }
 
     public static void setContext(Context context)
     {
