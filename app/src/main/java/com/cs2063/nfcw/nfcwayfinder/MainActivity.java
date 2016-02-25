@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 public class MainActivity extends Activity
 {
     private static final String TAG = "MainActivity";
@@ -49,7 +51,8 @@ public class MainActivity extends Activity
         mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
 
         roomDataModelManager = new RoomDataModel(getApplicationContext());//Initialise RoomDataModel
-        firebaseManager = new FirebaseManager(getApplicationContext());//Initialise Firebase Manager.
+        Firebase.setAndroidContext(getApplicationContext());
+        firebaseManager = new FirebaseManager();//Initialise Firebase Manager.
 
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Create a generic PendingIntent that will be deliver to this activity.
@@ -130,6 +133,13 @@ public class MainActivity extends Activity
         if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
         roomDataModelManager.getJSON();//TODO Scan JSON based on building in result.
         rvAdapter.swap(roomDataModelManager.getRooms());//Notify new JSON was loaded from RoomDataModel.
+
+        String[] tokens = nfcTagContent.split("-");
+        for (String t: tokens)
+        {
+            Log.d(TAG, "Token: " + t);
+        }
+        firebaseManager.getBuilding(tokens[0]);//Building of current location.
     }
 
     private void setupRecyclerView(RecyclerView rv)
