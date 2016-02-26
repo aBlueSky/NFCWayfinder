@@ -7,7 +7,6 @@ public class Room implements Comparable
 {
 
     // Room attributes
-    String complex = "None";
     String building = "None";
     String level = "None";
     String roomNumber = "None";
@@ -20,7 +19,12 @@ public class Room implements Comparable
         roomNumber = id;
     }
 
-    public String getComplex() { return complex; }
+    public Room(String roomNumber, String level, String building)
+    {
+        this.building = building;
+        this.level = level;
+        this.roomNumber = roomNumber;
+    }
 
     public String getBuilding() {
         return building;
@@ -29,11 +33,6 @@ public class Room implements Comparable
     public String getLevel() { return level; }
 
     public String getRoomNumber() { return roomNumber; }
-
-    public String getCondensedFields()
-    {
-        return "[complex:"+complex+"; building:"+building+"; level:"+level+"]";
-    }
 
     @Override
     public int compareTo(Object room) {

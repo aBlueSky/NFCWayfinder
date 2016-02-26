@@ -26,6 +26,7 @@ public class RoomRecyclerViewAdapter extends
 
     public void swap(List<Room> rooms)
     {
+        Log.d(TAG, "swap() called.");
         mValues.clear();
         mValues.addAll(rooms);
         notifyDataSetChanged();
@@ -41,9 +42,9 @@ public class RoomRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getRoomNumber());
-        holder.mCondensedFieldView.setText(mValues.get(position).getCondensedFields());
-        holder.mComplexView.setText(mValues.get(position).getComplex());
+        holder.mRoomNumberView.setText(mValues.get(position).getRoomNumber());
+        holder.mRoomLevelView.setText(mValues.get(position).getLevel());
+        holder.mRoomBuildingView.setText(mValues.get(position).getBuilding());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,22 +78,22 @@ public class RoomRecyclerViewAdapter extends
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mCondensedFieldView;
-        public final TextView mComplexView;
+        public final TextView mRoomNumberView;
+        public final TextView mRoomLevelView;
+        public final TextView mRoomBuildingView;
         public Room mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mCondensedFieldView = (TextView) view.findViewById(R.id.content);
-            mComplexView = (TextView) view.findViewById(R.id.complex);
+            mRoomNumberView = (TextView) view.findViewById(R.id.room_number);
+            mRoomLevelView = (TextView) view.findViewById(R.id.room_level);
+            mRoomBuildingView = (TextView) view.findViewById(R.id.room_building);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mCondensedFieldView.getText() + "'";
+            return super.toString() + " '" + mRoomNumberView.getText() + mRoomLevelView.getText() + "'";
         }
     }
 }

@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity
 {
     private static final String TAG = "MainActivity";
@@ -58,7 +60,6 @@ public class MainActivity extends Activity
         // Create a generic PendingIntent that will be deliver to this activity.
         nfcPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        // TODO limit the ndef MIME filter to what we need.
         IntentFilter tagIntentFilter = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try
         {
@@ -130,16 +131,15 @@ public class MainActivity extends Activity
 
     public void handleNFCPayload(String nfcTagContent)
     {
+        Log.d(TAG, "handleNFCPayload() called.");
         if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
-        roomDataModelManager.getJSON();//TODO Scan JSON based on building in result.
-        rvAdapter.swap(roomDataModelManager.getRooms());//Notify new JSON was loaded from RoomDataModel.
-
         String[] tokens = nfcTagContent.split("-");
         for (String t: tokens)
         {
             Log.d(TAG, "Token: " + t);
         }
-        firebaseManager.getBuilding(tokens[0]);//Building of current location.
+        firebaseManager.getBuilding(tokens[0]);
+        rvAdapter.swap(firebaseManager.getRooms());//Building of current location.
     }
 
     private void setupRecyclerView(RecyclerView rv)
