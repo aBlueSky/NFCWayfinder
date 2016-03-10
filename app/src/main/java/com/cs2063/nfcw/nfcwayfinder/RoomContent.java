@@ -14,18 +14,14 @@ public class RoomContent
 {
     private static final String TAG = "RoomContent";
     public static final List<Room> ITEMS = new ArrayList<Room>();
-    public static final Map<String, Room> ITEM_MAP =
-            new HashMap<String, Room>();
 
-    private static final int COUNT = 3;
-
+    //TODO: Remove this debug list that preloads the adapter to have items.
     static {
-        for(int i = 0; i < COUNT; i++)
+        for(int i = 0; i < 3; i++)
         {
             Room r = new Room();
             r.roomNumber = "" + i;
             ITEMS.add(r);
-            ITEM_MAP.put(r.roomNumber, r);
         }
     }
 }

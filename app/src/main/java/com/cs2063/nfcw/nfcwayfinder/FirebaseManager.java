@@ -24,7 +24,7 @@ public class FirebaseManager
     private final static String TAG = "FirebaseManager";
     private Firebase firebase;
     private String lastBuildingloaded;
-    ArrayList<Room> roomArray;
+    private ArrayList<Room> roomArray;
 
     public FirebaseManager()
     {
@@ -42,7 +42,11 @@ public class FirebaseManager
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 Log.d(TAG, "onDataChange() called.");
-                if(lastBuildingloaded.equals(building)) return;
+                if(lastBuildingloaded.equals(building))
+                {
+                    Log.d(TAG, "Building: " + building +" already loaded.");
+                    return;
+                }
                 roomArray.clear();
                 lastBuildingloaded = building;
                 DataSnapshot buildingSnapshot = dataSnapshot.child("Buildings").child(building)
@@ -63,8 +67,7 @@ public class FirebaseManager
                                 + "\tX-Y: " + x + "-" + y);
                     }
                 }
-                //swap?
-                rvAdapter.swap(getRooms());//Building of current location.
+                rvAdapter.swap(roomArray);//Update the list adapter with the new items.
             }
 
             @Override
@@ -72,9 +75,5 @@ public class FirebaseManager
             {
             }
         });
-    }
-    public ArrayList<Room> getRooms()
-    {
-        return roomArray;
     }
 }

@@ -45,12 +45,9 @@ public class MainActivity extends AppCompatActivity
 
     //Assorted Managers
     private FirebaseManager firebaseManager;
-    private RoomDataModel roomDataModelManager;
 
-    //TODO: Remove eventually.
-    // Debug text views for preview of JSON and NFC operations.
-    private static TextView mText;//text view for debugging NFC tag.
-    private static int mCount = 0;//debug output count of NFC tags.
+    private static TextView mText;//text view for debugging NFC tag.//TODO: REMOVE b/c DEBUG
+    private static int mCount = 0;//debug output count of NFC tags.//TODO: REMOVE b/c DEBUG
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -91,7 +88,6 @@ public class MainActivity extends AppCompatActivity
 
         mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
 
-        roomDataModelManager = new RoomDataModel(getApplicationContext());//Initialise RoomDataModel
         Firebase.setAndroidContext(getApplicationContext());
         firebaseManager = new FirebaseManager();//Initialise Firebase Manager.
 
@@ -106,12 +102,12 @@ public class MainActivity extends AppCompatActivity
         }
         catch (IntentFilter.MalformedMimeTypeException e)
         {
-            throw new RuntimeException("fail", e);
+            throw new RuntimeException("Failure to add intent filter data type.", e);
         }
         intentFiltersArray = new IntentFilter[]{tagIntentFilter,};
         mTechLists = new String[][]{new String[]{NfcF.class.getName()}};//Techlist for all NFC.
 
-        //Setup debug recyclerview
+        //TODO: Replace once the map function has been added/ move to a separate menu?
         rv = findViewById(R.id.room_list);
         assert rv != null;
         setupRecyclerView((RecyclerView) rv);
@@ -122,6 +118,7 @@ public class MainActivity extends AppCompatActivity
     {
         Log.d(TAG, "onResume() called.");
         super.onResume();
+        //re-enable foreground dispatch since app is now running.
         if (nfcAdpt != null)
             nfcAdpt.enableForegroundDispatch(this, nfcPendingIntent, intentFiltersArray,
                     mTechLists);
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity
 
         String action = intent.getAction();
         Log.d(TAG, "Action: " + action);
-        //We're only handling NDEF at the moment.
+        //We're only handling NDEF.
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action))
         {
             String type = intent.getType();
@@ -158,6 +155,7 @@ public class MainActivity extends AppCompatActivity
     protected void onPause()
     {
         super.onPause();
+        //disable foreground dispatch since app is in background.
         if (nfcAdpt != null) nfcAdpt.disableForegroundDispatch(this);
     }
 
@@ -168,6 +166,11 @@ public class MainActivity extends AppCompatActivity
         handleIntent(intent);
     }
 
+    /**
+     * After the NFC Adapter is sent the NFCPendingIntent by #handleIntent the text of the NFC
+     * tag is handled by this.
+     * @param nfcTagContent the string that was contained on the scanned by NFC Adapter
+     */
     public void handleNFCPayload(String nfcTagContent)
     {
         Log.d(TAG, "handleNFCPayload() called.");
@@ -179,9 +182,15 @@ public class MainActivity extends AppCompatActivity
         firebaseManager.getBuilding(tokens[0], rvAdapter);
     }
 
+    /**
+     * Set up a recycler view and adapter to display the content read by NFC tags and retrieved
+     * from Firebase from #handleNFCPayload .
+     * @param rv
+     */
     private void setupRecyclerView(RecyclerView rv)
     {
         Log.d(TAG, "setupRecyclerView() called.");
+        //rvAdapter is what is updated with new room items.
         rv.setAdapter(rvAdapter = new RoomRecyclerViewAdapter(RoomContent.ITEMS));
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
