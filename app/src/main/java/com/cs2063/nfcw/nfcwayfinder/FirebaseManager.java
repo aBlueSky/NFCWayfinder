@@ -33,7 +33,7 @@ public class FirebaseManager
         roomArray = new ArrayList<Room>();
     }
 
-    public void getBuilding(final String building)
+    public void getBuilding(final String building, final RoomRecyclerViewAdapter rvAdapter)
     {
         Log.d(TAG, "getBuilding() called.");
         firebase.addListenerForSingleValueEvent(new ValueEventListener()
@@ -43,6 +43,7 @@ public class FirebaseManager
             {
                 Log.d(TAG, "onDataChange() called.");
                 if(lastBuildingloaded.equals(building)) return;
+                roomArray.clear();
                 lastBuildingloaded = building;
                 DataSnapshot buildingSnapshot = dataSnapshot.child("Buildings").child(building)
                         .child("Levels");
@@ -62,6 +63,8 @@ public class FirebaseManager
                                 + "\tX-Y: " + x + "-" + y);
                     }
                 }
+                //swap?
+                rvAdapter.swap(getRooms());//Building of current location.
             }
 
             @Override

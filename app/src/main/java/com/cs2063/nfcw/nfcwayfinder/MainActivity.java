@@ -138,8 +138,7 @@ public class MainActivity extends Activity
         {
             Log.d(TAG, "Token: " + t);
         }
-        firebaseManager.getBuilding(tokens[0]);
-        rvAdapter.swap(firebaseManager.getRooms());//Building of current location.
+        firebaseManager.getBuilding(tokens[0], rvAdapter);
     }
 
     private void setupRecyclerView(RecyclerView rv)
