@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">NFCWayfinder</string>
+    <string name="json">
+        {
+          "complexes": [
+            {"complex":\"Head Hall Complex\",
+              "building":\"Information Technology Center\",
+              "level":\"d level = 4th floor\",
+              "roomNumber":
+              \"414\"}
+          ]
+        }
+    </string>
+    <string name="json2">
+        {
+          \"complexes\": [
+            {
+              \"complex\": \"Head Hall\",
+              \"building\": \"Information Technology Center\",
+              \"level\": \"ITD\",
+              \"roomNumber\": \"414\"
+            },
+            {
+              \"complex\": \"Head Hall\",
+              \"building\": \"Information Technology Center\",
+              \"level\": \"ITD\",
+              \"roomNumber\": \"415\"
+            },
+            {
+              \"complex\": \"Head Hall\",
+              \"building\": \"Information Technology Center\",
+              \"level\": \"ITC\",
+              \"roomNumber\": \"317\"
+            },
+            {
+              \"complex\": \"Head Hall\",
+              \"building\": \"Information Technology Center\",
+              \"level\": \"ITC\",
+              \"roomNumber\": \"307\"
+            }
+          ]
+        }
+    </string>
 </resources>

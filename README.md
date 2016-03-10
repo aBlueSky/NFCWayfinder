@@ -22,3 +22,4 @@ _Using Source Tree & Android Studio_
 2. [Balsamiq, UI prototyping tool](https://balsamiq.com/products/mockups/ "Balsamiq") 
 3. [Dr. Cook's Github Account](https://github.com/cpaulcook "Dr. Cook") 
 4. [Android NFC Quick Tutorial](http://www.survivingwithandroid.com/2015/03/nfc-in-android-ndef.html "NFC Tutorial")
+5. [An android NFC example of foreground-dispatch](https://android.googlesource.com/platform/development/+/master/samples/ApiDemos/src/com/example/android/apis/nfc/ForegroundDispatch.java "Foreground Dispatch example")
