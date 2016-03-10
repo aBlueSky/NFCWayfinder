@@ -10,6 +10,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +22,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MainActivity extends Activity
+public class MainActivity extends AppCompatActivity
 {
     private static final String TAG = "MainActivity";
     public static final String MIME_TEXT_PLAIN = "text/plain";
