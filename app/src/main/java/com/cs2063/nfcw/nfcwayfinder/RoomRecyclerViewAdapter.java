@@ -14,8 +14,6 @@ import java.util.List;
 /**
  * Created by Koves on 2/21/2016.
  */
-//TODO: Move RoomContent to here, so that notifyDataSetChanged() and notifyItemRemoved(position)
-// notifyItemRangeChanged(position, list.size()) can be used for dynamic list.
 public class RoomRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder>
 {
@@ -24,6 +22,14 @@ public class RoomRecyclerViewAdapter extends
     public RoomRecyclerViewAdapter(List<Room> items)
     {
         mValues = items;
+    }
+
+    public void swap(List<Room> rooms)
+    {
+        Log.d(TAG, "swap() called.");
+        mValues.clear();
+        mValues.addAll(rooms);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -36,9 +42,9 @@ public class RoomRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getRoomNumber());
-        holder.mCondensedFieldView.setText(mValues.get(position).getCondensedFields());
-        holder.mComplexView.setText(mValues.get(position).getComplex());
+        holder.mRoomNumberView.setText(mValues.get(position).getRoomNumber());
+        holder.mRoomLevelView.setText(mValues.get(position).getLevel());
+        holder.mRoomBuildingView.setText(mValues.get(position).getBuilding());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +67,6 @@ public class RoomRecyclerViewAdapter extends
                     context.startActivity(intent);
                 }
                 */
-
-                //Toast.makeText(v.getApplicationContext(), "Clicked a room item!", Toast
-                // .LENGTH_SHORT);
             }
         });
     }
@@ -75,22 +78,22 @@ public class RoomRecyclerViewAdapter extends
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mCondensedFieldView;
-        public final TextView mComplexView;
+        public final TextView mRoomNumberView;
+        public final TextView mRoomLevelView;
+        public final TextView mRoomBuildingView;
         public Room mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mCondensedFieldView = (TextView) view.findViewById(R.id.content);
-            mComplexView = (TextView) view.findViewById(R.id.complex);
+            mRoomNumberView = (TextView) view.findViewById(R.id.room_number);
+            mRoomLevelView = (TextView) view.findViewById(R.id.room_level);
+            mRoomBuildingView = (TextView) view.findViewById(R.id.room_building);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mCondensedFieldView.getText() + "'";
+            return super.toString() + " '" + mRoomNumberView.getText() + mRoomLevelView.getText() + "'";
         }
     }
 }
