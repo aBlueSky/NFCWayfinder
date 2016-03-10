@@ -14,11 +14,13 @@ public class Room implements Comparable
     // Empty Constructor
     public Room() {}
 
+    //TODO: Remove, this is a debug constructor.
     public Room(String id)
     {
         roomNumber = id;
     }
 
+    //Full constructor
     public Room(String roomNumber, String level, String building)
     {
         this.building = building;
@@ -35,6 +37,7 @@ public class Room implements Comparable
     public String getRoomNumber() { return roomNumber; }
 
     @Override
+    //This allows rooms to be compared and ordered against each other.
     public int compareTo(Object room) {
         if(this.roomNumber == ((Room)room).roomNumber)
             return 0;

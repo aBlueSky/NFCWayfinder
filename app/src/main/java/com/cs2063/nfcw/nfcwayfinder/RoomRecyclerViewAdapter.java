@@ -29,7 +29,7 @@ public class RoomRecyclerViewAdapter extends
         Log.d(TAG, "swap() called.");
         mValues.clear();
         mValues.addAll(rooms);
-        notifyDataSetChanged();
+        notifyDataSetChanged();//notify anything using the adapter to update their views.
     }
 
     @Override
@@ -91,6 +91,7 @@ public class RoomRecyclerViewAdapter extends
             mRoomBuildingView = (TextView) view.findViewById(R.id.room_building);
         }
 
+        //TODO: unsure if anything other that super.toString() is needed.
         @Override
         public String toString() {
             return super.toString() + " '" + mRoomNumberView.getText() + mRoomLevelView.getText() + "'";
