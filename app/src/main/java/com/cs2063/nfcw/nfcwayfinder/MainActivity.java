@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity
     private static TextView mText;//text view for debugging NFC tag.//TODO: REMOVE b/c DEBUG
     private static int mCount = 0;//debug output count of NFC tags.//TODO: REMOVE b/c DEBUG
 
+    Toolbar myToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle(R.string.app_name);
 
@@ -206,8 +208,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
+            case R.id.action_maps:
+
+                return true;
+
+            case R.id.action_access:
+                MenuItem access = myToolbar.getMenu().getItem(1);
+                if(access.isChecked()) { access.setChecked(false); }
+                else { access.setChecked(true); }
+                return true;
+
+            case R.id.action_about:
+
                 return true;
 
             default:
