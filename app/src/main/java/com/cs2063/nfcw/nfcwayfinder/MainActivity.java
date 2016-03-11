@@ -4,20 +4,23 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends Activity
 {
@@ -72,6 +75,8 @@ public class MainActivity extends Activity
         rv = findViewById(R.id.room_list);
         assert rv != null;
         setupRecyclerView((RecyclerView) rv);
+
+        //firebaseManager.sendMapToFirebase("ITC", createImageAsString(R.drawable.itc_level_snip));
     }
 
     @Override
@@ -141,7 +146,7 @@ public class MainActivity extends Activity
         {
             Log.d(TAG, "Token: " + t);
         }
-        firebaseManager.getBuilding(tokens[0], rvAdapter);
+        firebaseManager.getBuilding(tokens[0], rvAdapter, this);
     }
 
     /**
@@ -155,5 +160,30 @@ public class MainActivity extends Activity
         //rvAdapter is what is updated with new room items.
         rv.setAdapter(rvAdapter = new RoomRecyclerViewAdapter(RoomContent.ITEMS));
         rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    //Convert a drawable image into a string to be added to firebase.
+    public String createImageAsString(int drawableIndex)
+    {
+        Log.d(TAG, "createImageAsString() called.");
+        Bitmap bmp =  BitmapFactory.decodeResource(getResources(),
+                drawableIndex);//your image
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String imageAsString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Log.d(TAG, "Map As String = " + imageAsString);
+        return  imageAsString;
+    }
+
+    //Convert a string pulled from firebase to an image png/bitmap
+    public void createStringAsImage(String imageAsString)
+    {
+        Log.d(TAG, "createStringAsImage() called.");
+        byte[] decodedString = Base64.decode(imageAsString, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        ImageView imageView = (ImageView) findViewById(R.id.mapView);
+        imageView.setImageBitmap(decodedByte);
     }
 }

@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.cs2063.nfcw.nfcwayfinder.MainActivity"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context="com.cs2063.nfcw.nfcwayfinder.MainActivity">
 
     <Button
+        android:id="@+id/btnDestination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set Destination"
-        android:id="@+id/btnDestination" />
+        android:text="Set Destination"/>
 
     <TextView
+        android:id="@+id/nfcTagText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Placeholder of NFC Tag."
-        android:id="@+id/nfcTagText"
-        android:background="#91c9f1"/>
+        android:background="#91c9f1"
+        android:text="Placeholder of NFC Tag."/>
+
+    <ImageView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:minHeight="200dp"/>
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <include layout="@layout/room_list"/>
     </FrameLayout>
 </LinearLayout>
