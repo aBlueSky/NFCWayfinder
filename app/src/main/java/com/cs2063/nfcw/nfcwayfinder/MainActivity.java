@@ -4,21 +4,30 @@ import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
+
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.support.v7.widget.Toolbar;
+
+import android.util.Base64;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +35,7 @@ import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -113,6 +122,8 @@ public class MainActivity extends AppCompatActivity
         rv = findViewById(R.id.room_list);
         assert rv != null;
         setupRecyclerView((RecyclerView) rv);
+
+        //firebaseManager.sendMapToFirebase("ITC", createImageAsString(R.drawable.itc_level_snip));
     }
 
     @Override
@@ -181,7 +192,7 @@ public class MainActivity extends AppCompatActivity
         for (String t: tokens) {
             Log.d(TAG, "Token: " + t);
         }
-        firebaseManager.getBuilding(tokens[0], rvAdapter);
+        firebaseManager.getBuilding(tokens[0], rvAdapter, this);
     }
 
     /**
@@ -198,7 +209,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.actionbar, menu);
@@ -227,5 +237,30 @@ public class MainActivity extends AppCompatActivity
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
+	}
+
+    //Convert a drawable image into a string to be added to firebase.
+    public String createImageAsString(int drawableIndex)
+    {
+        Log.d(TAG, "createImageAsString() called.");
+        Bitmap bmp =  BitmapFactory.decodeResource(getResources(),
+                drawableIndex);//your image
+        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
+        bmp.recycle();
+        byte[] byteArray = bYtE.toByteArray();
+        String imageAsString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        Log.d(TAG, "Map As String = " + imageAsString);
+        return  imageAsString;
+    }
+
+    //Convert a string pulled from firebase to an image png/bitmap
+    public void createStringAsImage(String imageAsString)
+    {
+        Log.d(TAG, "createStringAsImage() called.");
+        byte[] decodedString = Base64.decode(imageAsString, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        ImageView imageView = (ImageView) findViewById(R.id.mapView);
+        imageView.setImageBitmap(decodedByte);
     }
 }
