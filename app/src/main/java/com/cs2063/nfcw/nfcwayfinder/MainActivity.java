@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         /////////////////////////////////////////////////////////////////////////////////////////////
 
-        mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
+        //mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
 
         Firebase.setAndroidContext(getApplicationContext());
         firebaseManager = new FirebaseManager();//Initialise Firebase Manager.
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         //TODO: Replace once the map function has been added/ move to a separate menu?
         rv = findViewById(R.id.room_list);
         assert rv != null;
-        setupRecyclerView((RecyclerView) rv);
+        //setupRecyclerView((RecyclerView) rv);
 
         //firebaseManager.sendMapToFirebase("ITC", createImageAsString(R.drawable.itc_level_snip));
     }
@@ -195,10 +195,11 @@ public class MainActivity extends AppCompatActivity
         firebaseManager.getBuilding(tokens[0], rvAdapter, this);
     }
 
+
     /**
      * Set up a recycler view and adapter to display the content read by NFC tags and retrieved
      * from Firebase from #handleNFCPayload .
-     * @param rv
+     * @param //rv
      */
     private void setupRecyclerView(RecyclerView rv)
     {
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity
         rv.setAdapter(rvAdapter = new RoomRecyclerViewAdapter(RoomContent.ITEMS));
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -239,6 +241,7 @@ public class MainActivity extends AppCompatActivity
         }
 	}
 
+
     //Convert a drawable image into a string to be added to firebase.
     public String createImageAsString(int drawableIndex)
     {
@@ -260,7 +263,8 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "createStringAsImage() called.");
         byte[] decodedString = Base64.decode(imageAsString, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        ImageView imageView = (ImageView) findViewById(R.id.mapView);
-        imageView.setImageBitmap(decodedByte);
+        //ImageView imageView = (ImageView) findViewById(R.id.mapView);
+        //imageView.setImageBitmap(decodedByte);
     }
+
 }
