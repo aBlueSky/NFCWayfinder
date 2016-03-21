@@ -23,7 +23,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+        <fragment android:id="@+id/content_fragment"
+                  android:name="com.cs2063.nfcw.nfcwayfinder.DefaultFragment"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"

@@ -1,6 +1,8 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -67,13 +69,17 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Toolbar Start ----------------------------------------------------------------------------
+
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(R.string.app_name);
 
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        //Floating Action Button Start--------------------------------------------------------------
 
         final View actionB = findViewById(R.id.action_b);
+        assert actionB != null;
 
         FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
         actionC.setTitle("Hide/Show Action above");
@@ -85,9 +91,11 @@ public class MainActivity extends AppCompatActivity
         });
 
         final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        assert menuMultipleActions != null;
         menuMultipleActions.addButton(actionC);
 
         final FloatingActionButton actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        assert actionA != null;
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +103,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        //Floating Action Button End----------------------------------------------------------------
 
         //mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
 
@@ -124,6 +132,12 @@ public class MainActivity extends AppCompatActivity
         //setupRecyclerView((RecyclerView) rv);
 
         //firebaseManager.sendMapToFirebase("ITC", createImageAsString(R.drawable.itc_level_snip));
+        FragmentSecondary f = new FragmentSecondary();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.content_fragment, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     @Override

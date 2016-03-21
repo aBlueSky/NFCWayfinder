@@ -8,15 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by beaul on 2016-03-13.
+ * Created by Koves on 3/21/2016.
  */
-public class MainFragment extends Fragment {
-
-    private static final String TAG = "MainFragment";
+public class FragmentSecondary extends Fragment
+{
+    private static final String TAG = "FragmentSecondary";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        Log.d(TAG, "Entered MainFragment onCreateView");
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        Log.d(TAG, "Entered DefaultFragment onCreateView");
+        return inflater.inflate(R.layout.fragment_secondary, container, false);
     }
 }

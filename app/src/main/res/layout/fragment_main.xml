@@ -4,9 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#22ff00"
-    tools:context="com.cs2063.nfcw.nfcwayfinder.MainFragment"
-    tools:showIn="@layout/activity_main">
+    android:background="#3366ff"
+    tools:context=".DefaultFragment">
 
     <!--
     <Button
@@ -37,11 +36,5 @@
         <include layout="@layout/room_list"/>
     </FrameLayout>
     -->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test"
-        android:id="@+id/FragAText"/>
 
 </LinearLayout>
