@@ -17,6 +17,7 @@ public class DefaultFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered DefaultFragment onCreateView");
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        ((MainActivity)getActivity()).menuMultipleActions.setVisibility(View.GONE);
+        return inflater.inflate(R.layout.default_fragment, container, false);
     }
 }

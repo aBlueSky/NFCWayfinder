@@ -44,4 +44,7 @@
           ]
         }
     </string>
+    <string name="tap_nfc">Tap an NFC tag</string>
+    <string name="get_started">to get started</string>
+    <string name="nfc_tag_desc">nfc tag</string>
 </resources>

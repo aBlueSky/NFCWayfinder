@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cs2063.nfcw.nfcwayfinder.DefaultFragment">
+
+    <!--
+    <Button
+        android:id="@+id/btnDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set Destination"/>
+
+    <TextView
+        android:id="@+id/nfcTagText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Placeholder of NFC Tag."
+        android:background="#91c9f1"/>
+
+    <ImageView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:minHeight="200dp"/>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/room_list"/>
+    </FrameLayout>
+    -->
+
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:id="@+id/nfc_logo"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/nfc_logo"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/nfc_tag_desc"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/get_started"
+        android:id="@+id/to_get_started"
+        android:layout_below="@+id/nfc_logo"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/tap_nfc"
+        android:id="@+id/tap_nfc"
+        android:layout_above="@+id/nfc_logo"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>
