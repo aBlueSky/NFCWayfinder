@@ -1,12 +1,9 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
-import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,9 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -58,7 +53,14 @@ public class MainActivity extends AppCompatActivity
     private static TextView mText;//text view for debugging NFC tag.//TODO: REMOVE b/c DEBUG
     private static int mCount = 0;//debug output count of NFC tags.//TODO: REMOVE b/c DEBUG
 
-    Toolbar myToolbar;
+    //Main Activity controls
+    public Toolbar myToolbar;
+    public FloatingActionsMenu menuMultipleActions;
+
+    //TODO: testing purposes, kill later.
+    private FloatingActionButton actionA;
+    private View actionB;
+    private FloatingActionButton actionC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -67,27 +69,35 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Toolbar Start ----------------------------------------------------------------------------
+
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        assert getSupportActionBar() != null;
         getSupportActionBar().setTitle(R.string.app_name);
 
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        //Floating Action Button Start--------------------------------------------------------------
 
-        final View actionB = findViewById(R.id.action_b);
+        actionB = findViewById(R.id.action_b);
+        assert actionB != null;
 
-        FloatingActionButton actionC = new FloatingActionButton(getBaseContext());
+        actionC = new FloatingActionButton(getBaseContext());
         actionC.setTitle("Hide/Show Action above");
-        actionC.setOnClickListener(new View.OnClickListener() {
+        actionC.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
             }
         });
 
-        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+        assert menuMultipleActions != null;
         menuMultipleActions.addButton(actionC);
 
-        final FloatingActionButton actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        assert actionA != null;
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +105,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        /////////////////////////////////////////////////////////////////////////////////////////////
+        //Floating Action Button End----------------------------------------------------------------
 
         //mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
 
@@ -123,7 +133,15 @@ public class MainActivity extends AppCompatActivity
         assert rv != null;
         //setupRecyclerView((RecyclerView) rv);
 
+
         //firebaseManager.sendMapToFirebase("ITC", createImageAsString(R.drawable.itc_level_snip));
+        DefaultFragment f = new DefaultFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.add(R.id.fragment_location, f);
+        ft.addToBackStack(null);
+        ft.commit();
+
     }
 
     @Override
@@ -240,7 +258,6 @@ public class MainActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
 	}
-
 
     //Convert a drawable image into a string to be added to firebase.
     public String createImageAsString(int drawableIndex)
