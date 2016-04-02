@@ -16,7 +16,7 @@ public class FragmentSecondary extends Fragment
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        Log.d(TAG, "Entered DefaultFragment onCreateView");
+        Log.d(TAG, "Entered FragmentSecondary onCreateView");
         return inflater.inflate(R.layout.fragment_secondary, container, false);
     }
 }
