@@ -58,9 +58,9 @@ public class MainActivity extends AppCompatActivity
     public FloatingActionsMenu menuMultipleActions;
 
     //TODO: testing purposes, kill later.
-    private FloatingActionButton actionA;
-    private View actionB;
-    private FloatingActionButton actionC;
+    //private FloatingActionButton actionA;
+    //private View actionB;
+    //private FloatingActionButton actionC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity
 
         //Floating Action Button Start--------------------------------------------------------------
 
+        /*
         actionB = findViewById(R.id.action_b);
         assert actionB != null;
 
@@ -91,9 +92,11 @@ public class MainActivity extends AppCompatActivity
                 actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
             }
         });
+        */
 
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
         assert menuMultipleActions != null;
+        /*
         menuMultipleActions.addButton(actionC);
 
         actionA = (FloatingActionButton) findViewById(R.id.action_a);
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity
                 actionA.setTitle("Action A clicked");
             }
         });
+        */
 
         //Floating Action Button End----------------------------------------------------------------
 
