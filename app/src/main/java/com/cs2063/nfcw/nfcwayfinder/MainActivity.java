@@ -205,12 +205,12 @@ public class MainActivity extends AppCompatActivity
     public void handleNFCPayload(String nfcTagContent)
     {
         Log.d(TAG, "handleNFCPayload() called.");
-        if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
+       // if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
         String[] tokens = nfcTagContent.split("-");
         for (String t: tokens) {
             Log.d(TAG, "Token: " + t);
         }
-        firebaseManager.getBuilding(tokens[0], rvAdapter, this);
+        firebaseManager.getBuilding(tokens[0], this);
     }
 
 
@@ -259,21 +259,6 @@ public class MainActivity extends AppCompatActivity
         }
 	}
 
-    //Convert a drawable image into a string to be added to firebase.
-    public String createImageAsString(int drawableIndex)
-    {
-        Log.d(TAG, "createImageAsString() called.");
-        Bitmap bmp =  BitmapFactory.decodeResource(getResources(),
-                drawableIndex);//your image
-        ByteArrayOutputStream bYtE = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, bYtE);
-        bmp.recycle();
-        byte[] byteArray = bYtE.toByteArray();
-        String imageAsString = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        Log.d(TAG, "Map As String = " + imageAsString);
-        return  imageAsString;
-    }
-
     //Convert a string pulled from firebase to an image png/bitmap
     public void createStringAsImage(String imageAsString)
     {
@@ -282,6 +267,15 @@ public class MainActivity extends AppCompatActivity
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         //ImageView imageView = (ImageView) findViewById(R.id.mapView);
         //imageView.setImageBitmap(decodedByte);
+    }
+    public void goToSecondFragment()
+    {
+        FragmentSecondary f = new FragmentSecondary();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.replace(R.id.fragment_location, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
 }
