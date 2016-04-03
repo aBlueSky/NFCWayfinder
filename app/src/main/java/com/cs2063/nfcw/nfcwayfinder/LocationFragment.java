@@ -83,14 +83,18 @@ public class LocationFragment extends Fragment
             paint.setAntiAlias(true);
             paint.setColor(Color.BLUE);
 
-
             Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
             Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
 
+            Bitmap locationMarker = BitmapFactory.decodeResource(getResources(), R.drawable.loc_icon);
 
             Canvas canvas = new Canvas(mutableBitmap);
-            canvas.drawCircle(currentLocation.x, currentLocation.y, 25, paint);
 
+            int bitmapSize = 72;
+            canvas.drawBitmap(locationMarker,
+                    currentLocation.x - (bitmapSize / 2),
+                    currentLocation.y - (bitmapSize),
+                    paint);
             imageView.setAdjustViewBounds(true);
             imageView.setImageBitmap(mutableBitmap);
         }
@@ -105,6 +109,10 @@ public class LocationFragment extends Fragment
 
                 RoomPickerFragment f = new RoomPickerFragment();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("StartLocationID", currentLocation.roomNumber);
+                f.setArguments(bundle);
 
                 ft.replace(R.id.fragment_location, f);
                 ft.addToBackStack(null);
@@ -138,28 +146,4 @@ public class LocationFragment extends Fragment
         mainActivity.menuMultipleActions.removeButton(fabViewMap);
         super.onPause();
     }
-/*
-    public class DrawView extends View
-    {
-        private final Paint mPainter = new Paint();
-        private Room room;
-        public DrawView(Context context, Room r)
-        {
-            super(context);
-            room = r;
-        }
-
-        @Override
-        protected synchronized void onDraw(Canvas canvas) {
-
-            // TODO - save the canvas
-            canvas.save();
-
-            // TODO - draw the bitmap at it's new location
-            //canvas.drawBitmap(mScaledBitmap, mXPos, mYPos, mPainter);
-
-            // TODO - restore the canvas
-            canvas.restore();
-        }
-    }*/
 }

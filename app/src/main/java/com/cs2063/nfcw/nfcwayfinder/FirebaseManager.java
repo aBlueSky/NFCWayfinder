@@ -8,6 +8,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,12 +24,14 @@ public class FirebaseManager
     private final static String TAG = "FirebaseManager";
     private Firebase firebase;
     public HashMap<String, Room> roomMap;
+    public ArrayList<String> visibleRoomIDs;
     private ArrayList<Edge> edgeList;
 
     public FirebaseManager()
     {
         firebase = new Firebase("https://nfcwayfinder.firebaseio.com/");
         roomMap = new HashMap<>();
+        visibleRoomIDs = new ArrayList<String>();
         edgeList = new ArrayList<Edge>();
     }
 
@@ -59,8 +62,10 @@ public class FirebaseManager
                         String roomName = room.child("Name").getValue().toString();
                         int x = Integer.parseInt(room.child("X").getValue().toString());
                         int y = Integer.parseInt(room.child("Y").getValue().toString());
+                        int type = Integer.parseInt(room.child("type").getValue().toString());
+                        if(type == 1) {visibleRoomIDs.add(roomNumber);}
                         roomMap.put(roomNumber, new Room(roomNumber, roomName, level, building,
-                                x / 2, y / 2));
+                                x / 2, y / 2, type));
                         Log.d(TAG, "Building: " + building + "\tLevel: " + level + "\tRoom: " + roomNumber
                                 + "\tRoom Name: " + roomName + "\tX-Y: " + x/2 + "-" + y/2);
                     }
@@ -101,6 +106,8 @@ public class FirebaseManager
                     String concatenatedEdge = path.getKey();
                     int accessFlag = Integer.parseInt(path.getValue().toString());
                     String[] edgeEnds = concatenatedEdge.split("-");
+                    Log.d(TAG, "Interconnected edge: " + concatenatedEdge + "isAccessible: " +
+                            (accessFlag==1));
                     Room firstEnd = (roomMap.containsKey(edgeEnds[0])?roomMap.get(edgeEnds[0])
                                                                      :null);
                     Room secondEnd = (roomMap.containsKey(edgeEnds[1])?roomMap.get(edgeEnds[1])
@@ -180,7 +187,10 @@ public class FirebaseManager
                 for (Edge e: current.neighbours)
                 {
                     Room n = e.otherEnd(current);
-
+                    if(!e.isAccessFriendly)
+                    {
+                        //todo add access check
+                    }
                     if (!openList.contains(n) && !closedList.contains(n))
                     {
                         //Not seen before.

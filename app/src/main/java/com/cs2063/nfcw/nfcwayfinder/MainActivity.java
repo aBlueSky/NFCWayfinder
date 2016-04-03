@@ -237,27 +237,12 @@ public class MainActivity extends AppCompatActivity
         }
 	}
 
-    //Convert a string pulled from firebase to an image png/bitmap
-    public void createStringAsImage(String imageAsString)
-    {
-        Log.d(TAG, "createStringAsImage() called.");
-        byte[] decodedString = Base64.decode(imageAsString, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        //ImageView imageView = (ImageView) findViewById(R.id.mapView);
-        //imageView.setImageBitmap(decodedByte);
-    }
     public void goToLocationFragment(Room taggedRoom)
     {
         if(taggedRoom == null) return;
         Log.d(TAG, "Testing path calc");//TODO Remove when destination choice has been added.
         Room s = firebaseManager.roomMap.get("101");
         Room d = firebaseManager.roomMap.get("201");
-        //ArrayList<Room> p = firebaseManager.getPathToSecond(s, d);
-        //for (Room r: p)
-        //{
-            //Log.d(TAG, "--- " + r.roomName + " , "+ r.roomNumber +"| X: " + r.x + ", " + r.y +
-            // " | " + r.getLevel());
-        //}
 
         firebaseManager.aStar(s,d);
 

@@ -17,6 +17,7 @@ public class Room implements Comparable
     String roomName = "None";
     int x = 0;
     int y = 0;
+    int type = -1;
     int distanceTravelled = -1;
     Room parent = null;//only for search use.
 
@@ -25,7 +26,8 @@ public class Room implements Comparable
     private Room() {}
 
     //Full constructor
-    public Room(String roomNumber, String roomName, String level, String building, int x, int y)
+    public Room(String roomNumber, String roomName, String level, String building, int x, int y,
+                int type)
     {
         this.building = building;
         this.level = level;
@@ -34,6 +36,7 @@ public class Room implements Comparable
         this.neighbours = new ArrayList<>();
         this.x = x;
         this.y = y;
+        this.type = type;
         this.distanceTravelled = 9999;
     }
 
