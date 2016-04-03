@@ -1,5 +1,8 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by Drew on 20/02/2016.
  */
@@ -11,14 +14,9 @@ public class Room implements Comparable
     String level = "None";
     String roomNumber = "None";
 
+    public ArrayList<Edge> neighbours;
     // Empty Constructor
     public Room() {}
-
-    //TODO: Remove, this is a debug constructor.
-    public Room(String id)
-    {
-        roomNumber = id;
-    }
 
     //Full constructor
     public Room(String roomNumber, String level, String building)
@@ -26,6 +24,7 @@ public class Room implements Comparable
         this.building = building;
         this.level = level;
         this.roomNumber = roomNumber;
+        this.neighbours = new ArrayList<>();
     }
 
     public String getBuilding() {
