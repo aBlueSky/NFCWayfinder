@@ -9,14 +9,16 @@ public class Edge
     private static Edge singleton = null;
     Room firstEnd;
     Room secondEnd;
+    boolean isAccessFriendly;//true if accessibility is supported.
     boolean visited;
 
     private Edge(){}
 
-    public Edge(Room first, Room second)
+    public Edge(Room first, Room second, boolean isAccessFriendly)
     {
-        firstEnd = first;
-        secondEnd = second;
+        this.firstEnd = first;
+        this.secondEnd = second;
+        this.isAccessFriendly = isAccessFriendly;
         visited = false;
     }
 
