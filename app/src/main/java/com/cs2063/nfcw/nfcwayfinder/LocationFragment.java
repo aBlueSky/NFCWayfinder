@@ -2,12 +2,20 @@ package com.cs2063.nfcw.nfcwayfinder;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -43,19 +51,48 @@ public class LocationFragment extends Fragment
         if (currentLocation == null)
         {
             imageView.setImageResource(R.drawable.first_floor3);
+            TextView lblRoomName = (TextView)view.findViewById(R.id.room_name);
+            lblRoomName.setText("Room invalid.");
         }
         else
         {
             int level = Integer.parseInt(currentLocation.getLevel());
+            int drawable;
+            TextView lblRoomName = (TextView)view.findViewById(R.id.room_name);
             switch (level)
             {
                 case 1:
-                    imageView.setImageResource(R.drawable.first_floor3);
+                    drawable = R.drawable.first_floor3;
                     break;
                 case 2:
-                    imageView.setImageResource(R.drawable.second_floor);
+                    drawable = R.drawable.second_floor;
+                    break;
+                default:
+                    drawable = R.drawable.first_floor3;
                     break;
             }
+            lblRoomName.setText(""+currentLocation.roomName);
+
+            BitmapFactory.Options myOptions = new BitmapFactory.Options();
+            myOptions.inDither = true;
+            myOptions.inScaled = false;
+            myOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable, myOptions);
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setColor(Color.BLUE);
+
+
+            Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
+            Bitmap mutableBitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+
+            Canvas canvas = new Canvas(mutableBitmap);
+            canvas.drawCircle(currentLocation.x, currentLocation.y, 25, paint);
+
+            imageView.setAdjustViewBounds(true);
+            imageView.setImageBitmap(mutableBitmap);
         }
 
         fabNavigate = new FloatingActionButton(mainActivity.getBaseContext());
@@ -101,5 +138,28 @@ public class LocationFragment extends Fragment
         mainActivity.menuMultipleActions.removeButton(fabViewMap);
         super.onPause();
     }
+/*
+    public class DrawView extends View
+    {
+        private final Paint mPainter = new Paint();
+        private Room room;
+        public DrawView(Context context, Room r)
+        {
+            super(context);
+            room = r;
+        }
 
+        @Override
+        protected synchronized void onDraw(Canvas canvas) {
+
+            // TODO - save the canvas
+            canvas.save();
+
+            // TODO - draw the bitmap at it's new location
+            //canvas.drawBitmap(mScaledBitmap, mXPos, mYPos, mPainter);
+
+            // TODO - restore the canvas
+            canvas.restore();
+        }
+    }*/
 }
