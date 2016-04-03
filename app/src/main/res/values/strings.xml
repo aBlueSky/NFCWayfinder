@@ -1,44 +1,15 @@
 <resources>
     <string name="app_name">NFCWayfinder</string>
-    <string name="json">
-        {
-          "complexes": [
-            {"complex":\"Head Hall Complex\",
-              "building":\"Information Technology Center\",
-              "level":\"d level = 4th floor\",
-              "roomNumber":
-              \"414\"}
-          ]
-        }
-    </string>
-    <string name="json2">
-        {
-          \"complexes\": [
-            {
-              \"complex\": \"Head Hall\",
-              \"building\": \"Information Technology Center\",
-              \"level\": \"ITD\",
-              \"roomNumber\": \"414\"
-            },
-            {
-              \"complex\": \"Head Hall\",
-              \"building\": \"Information Technology Center\",
-              \"level\": \"ITD\",
-              \"roomNumber\": \"415\"
-            },
-            {
-              \"complex\": \"Head Hall\",
-              \"building\": \"Information Technology Center\",
-              \"level\": \"ITC\",
-              \"roomNumber\": \"317\"
-            },
-            {
-              \"complex\": \"Head Hall\",
-              \"building\": \"Information Technology Center\",
-              \"level\": \"ITC\",
-              \"roomNumber\": \"307\"
-            }
-          ]
-        }
-    </string>
+    <string name="action_maps">Installed Maps</string>
+    <string name="action_access">Accessibility Routes</string>
+    <string name="action_about">About</string>
+    <string name="tap_nfc">Tap an NFC tag</string>
+    <string name="get_started">to get started</string>
+    <string name="nfc_tag_desc">nfc tag</string>
+    <string name="currently_near">You are currently near:</string>
+    <string name="room_information">Room Information</string>
+    <string name="content_desc_floor_map">Floor Map</string>
+    <string name="destination">Enter Destination:</string>
+    <string name="nav_end">Destination:</string>
+    <string name="nav_start">Start Location:</string>
 </resources>
