@@ -23,16 +23,40 @@ public class LocationFragment extends Fragment
 
     private static final String TAG = "LocationFragment";
 
+    private Room currentLocation;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered LocationFragment onCreateView");
         View view = inflater.inflate(R.layout.location_fragment, container, false);
+        Bundle bundle = getArguments();
+        String roomNumber = bundle.getString("RoomNum");
 
         mainActivity = ((MainActivity) getActivity());
         mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
 
+        currentLocation = mainActivity.firebaseManager.roomMap.containsKey(roomNumber)?
+                          mainActivity.firebaseManager.roomMap.get(roomNumber):
+                          null;
+
         ImageView imageView = (ImageView) view.findViewById(R.id.mapView);
-        imageView.setImageResource(R.drawable.first_floor3);
+        if (currentLocation == null)
+        {
+            imageView.setImageResource(R.drawable.first_floor3);
+        }
+        else
+        {
+            int level = Integer.parseInt(currentLocation.getLevel());
+            switch (level)
+            {
+                case 1:
+                    imageView.setImageResource(R.drawable.first_floor3);
+                    break;
+                case 2:
+                    imageView.setImageResource(R.drawable.second_floor);
+                    break;
+            }
+        }
 
         fabNavigate = new FloatingActionButton(mainActivity.getBaseContext());
         fabNavigate.setTitle("Navigate");
@@ -61,7 +85,6 @@ public class LocationFragment extends Fragment
 
             }
         });
-
         return view;
     }
 

@@ -14,8 +14,6 @@ import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import android.support.v7.widget.Toolbar;
 
@@ -25,13 +23,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.firebase.client.Firebase;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -45,12 +40,8 @@ public class MainActivity extends AppCompatActivity
     private IntentFilter[] intentFiltersArray;
     private String[][] mTechLists;//what is mTechLists for?
 
-    //RecyclerView Variables
-    private View rv;
-    private RoomRecyclerViewAdapter rvAdapter;
-
     //Assorted Managers
-    private FirebaseManager firebaseManager;
+    public FirebaseManager firebaseManager;
 
     //Main Activity controls
     public Toolbar myToolbar;
@@ -207,7 +198,7 @@ public class MainActivity extends AppCompatActivity
         for (String t: tokens) {
             Log.d(TAG, "Token: " + t);
         }
-        firebaseManager.getBuilding(tokens[0], this);
+        firebaseManager.getBuilding(tokens[0], tokens[1], tokens[2], this);
     }
 
     @Override
@@ -250,19 +241,25 @@ public class MainActivity extends AppCompatActivity
         //ImageView imageView = (ImageView) findViewById(R.id.mapView);
         //imageView.setImageBitmap(decodedByte);
     }
-    public void goToLocationFragment()
+    public void goToLocationFragment(Room taggedRoom)
     {
+        if(taggedRoom == null) return;
         Log.d(TAG, "Testing path calc");//TODO Remove when destination choice has been added.
         Room s = firebaseManager.roomMap.get("101");
         Room d = firebaseManager.roomMap.get("201");
-        ArrayList<Room> p = firebaseManager.getPathTo(s, d);
-        for (Room r: p
-             )
-        {
-            Log.d(TAG, "--- " + r.roomName + "| X: " + r.x + ", " + r.y + " | " + r.getLevel());
-        }
+        //ArrayList<Room> p = firebaseManager.getPathToSecond(s, d);
+        //for (Room r: p)
+        //{
+            //Log.d(TAG, "--- " + r.roomName + " , "+ r.roomNumber +"| X: " + r.x + ", " + r.y +
+            // " | " + r.getLevel());
+        //}
+
+        firebaseManager.aStar(s,d);
 
         LocationFragment f = new LocationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("RoomNum", taggedRoom.getRoomNumber());
+        f.setArguments(bundle);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         ft.replace(R.id.fragment_location, f);

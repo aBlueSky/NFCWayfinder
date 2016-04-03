@@ -6,9 +6,12 @@ package com.cs2063.nfcw.nfcwayfinder;
 public class Edge
 {
     //Edge Characteristics
+    private static Edge singleton = null;
     Room firstEnd;
     Room secondEnd;
     boolean visited;
+
+    private Edge(){}
 
     public Edge(Room first, Room second)
     {
@@ -22,5 +25,14 @@ public class Edge
         if(firstEnd.compareTo(given)==0) return secondEnd;
         if(secondEnd.compareTo(given)==0) return firstEnd;
         return null;
+    }
+
+    public static Edge terminalEdge()
+    {
+        if(singleton == null)
+        {
+            singleton = new Edge();
+        }
+        return singleton;
     }
 }
