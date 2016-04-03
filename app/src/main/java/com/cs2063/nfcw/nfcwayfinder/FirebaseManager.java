@@ -46,12 +46,10 @@ public class FirebaseManager
                 roomMap.clear();
                 edgeList.clear();
 
-                DataSnapshot buildingSnapshot = dataSnapshot.child("Buildings").child(building)
-                        .child("Levels");
-                int numLvls = (int) buildingSnapshot.getChildrenCount();
+                DataSnapshot buildingSnapshot = dataSnapshot.child("Buildings").child(building);
                 Log.d(TAG, "Snapshot for building: " + building);
 
-                for (DataSnapshot levels : buildingSnapshot.getChildren())
+                for (DataSnapshot levels : buildingSnapshot.child("Levels").getChildren())
                 {
                     Log.d(TAG, "Rooms: ");
                     String level = levels.getKey();
@@ -78,23 +76,13 @@ public class FirebaseManager
                         {
                             Log.d(TAG, "Edge is: " + concatenatedEdge);
                             String[] edgeEnds = concatenatedEdge.split("-");
-                            Room firstEnd = null;
-                            Room secondEnd = null;
-                            Iterator<String> keySetIterator = roomMap.keySet().iterator();
-                            while (keySetIterator.hasNext())
-                            {
-                                String key = keySetIterator.next();
-                                Room room = roomMap.get(key);
-                                if (room.roomNumber.equals(edgeEnds[0])) firstEnd = room;
-                                if (room.roomNumber.equals(edgeEnds[1])) secondEnd = room;
-                            }
-                            Log.d(TAG, "Edge '"+ concatenatedEdge + " ' end: " + edgeEnds[0] + " " +
-                                "exists: " + (firstEnd != null? true: false));
-                            Log.d(TAG, "Edge '"+ concatenatedEdge + " ' end: " + edgeEnds[1] + " " +
-                                    "exists: " + (secondEnd != null? true: false));
+                            Room firstEnd = (roomMap.containsKey(edgeEnds[0])?roomMap.get(edgeEnds[0])
+                                                                             :null);
+                            Room secondEnd = (roomMap.containsKey(edgeEnds[1])?roomMap.get(edgeEnds[1])
+                                                                              :null);
                             if(firstEnd != null && secondEnd != null)
                             {
-                                Edge edge = new Edge(firstEnd, secondEnd);
+                                Edge edge = new Edge(firstEnd, secondEnd, true);
                                 edgeList.add(edge);
                                 firstEnd.neighbours.add(edge);
                                 secondEnd.neighbours.add(edge);
@@ -105,8 +93,28 @@ public class FirebaseManager
                     {
                         Log.d(TAG, "Edge list for level " + level + " is empty.");
                     }
-
                 }
+
+                //Elevation related edges handled now that all floors have rooms initialised.
+                for (DataSnapshot path : buildingSnapshot.child("Interconnect").getChildren())
+                {
+                    String concatenatedEdge = path.getKey();
+                    int accessFlag = Integer.parseInt(path.getValue().toString());
+                    String[] edgeEnds = concatenatedEdge.split("-");
+                    Room firstEnd = (roomMap.containsKey(edgeEnds[0])?roomMap.get(edgeEnds[0])
+                                                                     :null);
+                    Room secondEnd = (roomMap.containsKey(edgeEnds[1])?roomMap.get(edgeEnds[1])
+                                                                     :null);
+                    if(firstEnd!=null && secondEnd != null)
+                    {
+                        Edge e = new Edge(firstEnd, secondEnd, (accessFlag==1));
+                        edgeList.add(e);
+                        firstEnd.neighbours.add(e);
+                        secondEnd.neighbours.add(e);
+                    }
+                }
+
+                //Trigger next fragment transaction.
                 mainActivity.goToLocationFragment(roomMap.containsKey(roomNumber)?roomMap.get
                         (roomNumber): null);
             }

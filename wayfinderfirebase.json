@@ -1,30 +1,275 @@
 {
   "Buildings" : {
-    "One" : {
+    "Convention Centre" : {
       "Levels" : {
-        "1st" : {
-          "Rooms": {
-            "11": {
-              "X": 0,
-              "Y": 0
-            }
-          },
-          "Paths": ["11-12"]
-        },
-        "2nd" : {
-          "Rooms": {
-            "21": {
-              "X": 2,
-              "Y": 2
+        "1" : {
+          "Paths" : [ "101-116", "101-102", "102-117", "103-119", "103-112", "104-118", "104-105", "105-119", "106-121", "107-121", "108-115", "108-109", "109-110", "110-111", "111-121", "112-120", "113-121", "113-114", "113-122", "115-119", "124-101", "125-116", "125-118", "126-117", "126-120", "127-122", "130-116", "130-101", "120-122", "122-128", "128-123" ],
+          "Rooms" : {
+            "101" : {
+              "Name" : "Conference Office",
+              "X" : 825,
+              "Y" : 547,
+              "type" : 1
             },
-            "22": {
-              "X": 3,
-              "Y": 3
+            "102" : {
+              "Name" : "Administration/Reception",
+              "X" : 1126,
+              "Y" : 578,
+              "type" : 1
+            },
+            "103" : {
+              "Name" : "Business Centre",
+              "X" : 906,
+              "Y" : 1020,
+              "type" : 1
+            },
+            "104" : {
+              "Name" : "Nashwaaksis Room A",
+              "X" : 640,
+              "Y" : 1020,
+              "type" : 1
+            },
+            "105" : {
+              "Name" : "Nashwaaksis Room B",
+              "X" : 765,
+              "Y" : 1020,
+              "type" : 1
+            },
+            "106" : {
+              "Name" : "Marysville Room A",
+              "X" : 765,
+              "Y" : 1590,
+              "type" : 1
+            },
+            "107" : {
+              "Name" : "Marysville Room B",
+              "X" : 692,
+              "Y" : 1590,
+              "type" : 1
+            },
+            "108" : {
+              "Name" : "Lincoln Room A",
+              "X" : 765,
+              "Y" : 1167,
+              "type" : 1
+            },
+            "109" : {
+              "Name" : "Lincoln Room B",
+              "X" : 765,
+              "Y" : 1259,
+              "type" : 1
+            },
+            "110" : {
+              "Name" : "St. Mary's Room A",
+              "X" : 765,
+              "Y" : 1353,
+              "type" : 1
+            },
+            "111" : {
+              "Name" : "St. Mary's Room B",
+              "X" : 765,
+              "Y" : 1447,
+              "type" : 1
+            },
+            "112" : {
+              "Name" : "Barker's Point Room A",
+              "X" : 984,
+              "Y" : 1020,
+              "type" : 1
+            },
+            "113" : {
+              "Name" : "Barker's Point Room B",
+              "X" : 984,
+              "Y" : 1590,
+              "type" : 1
+            },
+            "114" : {
+              "Name" : "Silverwood Room",
+              "X" : 984,
+              "Y" : 1590,
+              "type" : 1
+            },
+            "115" : {
+              "Name" : "Devon Room",
+              "X" : 765,
+              "Y" : 1085,
+              "type" : 1
+            },
+            "116" : {
+              "Name" : "Corner A",
+              "X" : 478,
+              "Y" : 464,
+              "type" : 2
+            },
+            "117" : {
+              "Name" : "Corner B",
+              "X" : 1250,
+              "Y" : 578,
+              "type" : 2
+            },
+            "118" : {
+              "Name" : "Corner C",
+              "X" : 478,
+              "Y" : 1020,
+              "type" : 2
+            },
+            "119" : {
+              "Name" : "Corner D",
+              "X" : 765,
+              "Y" : 1020,
+              "type" : 2
+            },
+            "120" : {
+              "Name" : "Corner E",
+              "X" : 1250,
+              "Y" : 1020,
+              "type" : 2
+            },
+            "121" : {
+              "Name" : "Corner F",
+              "X" : 765,
+              "Y" : 1590,
+              "type" : 2
+            },
+            "122" : {
+              "Name" : "Corner G",
+              "X" : 1250,
+              "Y" : 1590,
+              "type" : 2
+            },
+            "123" : {
+              "Name" : "Corner H",
+              "X" : 1250,
+              "Y" : 1980,
+              "type" : 2
+            },
+            "124" : {
+              "Name" : "Stairs A",
+              "X" : 830,
+              "Y" : 440,
+              "type" : 3
+            },
+            "125" : {
+              "Name" : "Stairs B",
+              "X" : 478,
+              "Y" : 530,
+              "type" : 3
+            },
+            "126" : {
+              "Name" : "Stairs C",
+              "X" : 1270,
+              "Y" : 655,
+              "type" : 3
+            },
+            "127" : {
+              "Name" : "Stairs D",
+              "X" : 1314,
+              "Y" : 1408,
+              "type" : 3
+            },
+            "128" : {
+              "Name" : "Stairs E",
+              "X" : 1250,
+              "Y" : 1865,
+              "type" : 3
+            },
+            "129" : {
+              "Name" : "Elevator A",
+              "X" : 478,
+              "Y" : 430,
+              "type" : 4
+            },
+            "130" : {
+              "Name" : "Elevator B",
+              "X" : 949,
+              "Y" : 445,
+              "type" : 4
             }
-          },
-          "Paths": ["21-22"]
+          }
+        },
+        "2" : {
+          "Paths" : [ "201-211", "201-210", "201-202", "202-203", "203-205", "204-206", "204-212", "204-205", "207-206", "208-206", "209-205", "212-205" ],
+          "Rooms" : {
+            "201" : {
+              "Name" : "Pointe Sainte-Anne Room A",
+              "X" : 1239,
+              "Y" : 1618,
+              "type" : 1
+            },
+            "202" : {
+              "Name" : "Pointe Sainte-Anne Room B",
+              "X" : 1239,
+              "Y" : 1241,
+              "type" : 1
+            },
+            "203" : {
+              "Name" : "Pointe Sainte-Anne Room C",
+              "X" : 1239,
+              "Y" : 793,
+              "type" : 1
+            },
+            "204" : {
+              "Name" : "Pointe Sainte-Anne Room D",
+              "X" : 805,
+              "Y" : 455,
+              "type" : 1
+            },
+            "205" : {
+              "Name" : "Corner A",
+              "X" : 1239,
+              "Y" : 449,
+              "type" : 2
+            },
+            "206" : {
+              "Name" : "Corner B",
+              "X" : 498,
+              "Y" : 455,
+              "type" : 2
+            },
+            "207" : {
+              "Name" : "Stairs A",
+              "X" : 365,
+              "Y" : 402,
+              "type" : 3
+            },
+            "208" : {
+              "Name" : "Stairs B",
+              "X" : 498,
+              "Y" : 520,
+              "type" : 3
+            },
+            "209" : {
+              "Name" : "Stairs C",
+              "X" : 1286,
+              "Y" : 269,
+              "type" : 3
+            },
+            "210" : {
+              "Name" : "Stairs D",
+              "X" : 1333,
+              "Y" : 1482,
+              "type" : 3
+            },
+            "211" : {
+              "Name" : "Stairs E",
+              "X" : 1300,
+              "Y" : 1865,
+              "type" : 3
+            },
+            "212" : {
+              "Name" : "Elevator B",
+              "X" : 971,
+              "Y" : 268,
+              "type" : 4
+            }
+          }
         }
+      },
+      "Interconnect" : {
+        "124-207": 0, "125-208": 0, "126-209": 0, "127-210": 0, "128-211": 0, "130-212" : 1
       }
     }
-  }
+  },
+  "Room Types" : [ null, "Rooms", "Corners", "Stairs", "Elevators" ],
+  "InterConnectIsAccessible" : ["Not Accessible", "Accessible"]
 }
