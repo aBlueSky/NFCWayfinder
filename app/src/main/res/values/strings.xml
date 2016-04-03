@@ -47,4 +47,7 @@
     <string name="tap_nfc">Tap an NFC tag</string>
     <string name="get_started">to get started</string>
     <string name="nfc_tag_desc">nfc tag</string>
+    <string name="currently_near">You are currently near:</string>
+    <string name="room_information">Room Information</string>
+    <string name="content_desc_floor_map">Floor Map</string>
 </resources>

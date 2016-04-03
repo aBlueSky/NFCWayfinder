@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -24,7 +25,10 @@ public class LocationFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered LocationFragment onCreateView");
-        return inflater.inflate(R.layout.location_fragment, container, false);
+        View view = inflater.inflate(R.layout.location_fragment, container, false);
+        ImageView imageView = (ImageView) view.findViewById(R.id.mapView);
+        imageView.setImageResource(R.drawable.first_floor3);
+        return view;
     }
     /*
     @Override

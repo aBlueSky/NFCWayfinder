@@ -26,9 +26,8 @@
         <LinearLayout android:id="@+id/fragment_location"
                   android:orientation="vertical"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"/>
-
-
+                  android:layout_height="match_parent"
+                  android:layout_marginTop="56dp"/>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"

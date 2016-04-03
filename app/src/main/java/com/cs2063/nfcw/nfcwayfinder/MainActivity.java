@@ -31,6 +31,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -49,9 +50,6 @@ public class MainActivity extends AppCompatActivity
 
     //Assorted Managers
     private FirebaseManager firebaseManager;
-
-    private static TextView mText;//text view for debugging NFC tag.//TODO: REMOVE b/c DEBUG
-    private static int mCount = 0;//debug output count of NFC tags.//TODO: REMOVE b/c DEBUG
 
     //Main Activity controls
     public Toolbar myToolbar;
@@ -132,12 +130,6 @@ public class MainActivity extends AppCompatActivity
         intentFiltersArray = new IntentFilter[]{tagIntentFilter,};
         mTechLists = new String[][]{new String[]{NfcF.class.getName()}};//Techlist for all NFC.
 
-        //TODO: Replace once the map function has been added/ move to a separate menu?
-        rv = findViewById(R.id.room_list);
-        assert rv != null;
-        //setupRecyclerView((RecyclerView) rv);
-
-
         //firebaseManager.sendMapToFirebase("ITC", createImageAsString(R.drawable.itc_level_snip));
         DefaultFragment f = new DefaultFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -217,21 +209,6 @@ public class MainActivity extends AppCompatActivity
         firebaseManager.getBuilding(tokens[0], this);
     }
 
-
-    /**
-     * Set up a recycler view and adapter to display the content read by NFC tags and retrieved
-     * from Firebase from #handleNFCPayload .
-     * @param //rv
-     */
-    private void setupRecyclerView(RecyclerView rv)
-    {
-        Log.d(TAG, "setupRecyclerView() called.");
-        //rvAdapter is what is updated with new room items.
-        rv.setAdapter(rvAdapter = new RoomRecyclerViewAdapter(RoomContent.ITEMS));
-        rv.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -272,8 +249,18 @@ public class MainActivity extends AppCompatActivity
         //ImageView imageView = (ImageView) findViewById(R.id.mapView);
         //imageView.setImageBitmap(decodedByte);
     }
-    public void goToSecondFragment()
+    public void goToLocationFragment()
     {
+        Log.d(TAG, "Testing path calc");//TODO Remove when destination choice has been added.
+        Room s = firebaseManager.roomMap.get("101");
+        Room d = firebaseManager.roomMap.get("201");
+        ArrayList<Room> p = firebaseManager.getPathTo(s, d);
+        for (Room r: p
+             )
+        {
+            Log.d(TAG, "--- " + r.roomName + "| X: " + r.x + ", " + r.y + " | " + r.getLevel());
+        }
+
         LocationFragment f = new LocationFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
