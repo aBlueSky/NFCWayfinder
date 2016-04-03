@@ -10,4 +10,6 @@
     <string name="room_information">Room Information</string>
     <string name="content_desc_floor_map">Floor Map</string>
     <string name="destination">Enter Destination:</string>
+    <string name="nav_end">Destination:</string>
+    <string name="nav_start">Start Location:</string>
 </resources>

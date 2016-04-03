@@ -222,7 +222,12 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.action_about:
+                AboutFragment f = new AboutFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
 
+                ft.replace(R.id.fragment_location, f);
+                ft.addToBackStack(null);
+                ft.commit();
                 return true;
 
             default:

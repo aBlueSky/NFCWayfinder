@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -36,12 +37,20 @@ public class RoomPickerFragment extends Fragment {
             public void onClick(View v) {
                 mainActivity.menuMultipleActions.collapse();
 
-                NavigationFragment f = new NavigationFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if(true)
+                {
+                    NavigationFragment f = new NavigationFragment();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.replace(R.id.fragment_location, f);
-                ft.addToBackStack(null);
-                ft.commit();
+                    ft.replace(R.id.fragment_location, f);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+                else
+                {
+                    Toast toast = Toast.makeText(mainActivity.getApplicationContext(), "", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
 
