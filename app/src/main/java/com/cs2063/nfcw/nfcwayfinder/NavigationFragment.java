@@ -16,29 +16,16 @@ public class NavigationFragment extends Fragment
 {
     MainActivity mainActivity;
 
-    FloatingActionButton fabContinue;
-    FloatingActionButton fabReturn;
-
     private static final String TAG = "NavigationFragment";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered LocationFragment onCreateView");
-        return inflater.inflate(R.layout.location_fragment, container, false);
-    }
-    /*
-    @Override
-    public void onResume() {
-        mainActivity.menuMultipleActions.addButton(fabContinue);
-        mainActivity.menuMultipleActions.addButton(fabReturn);
-        super.onResume();
-    }
+        View view = inflater.inflate(R.layout.navigation_fragment, container, false);
 
-    @Override
-    public void onPause() {
-        mainActivity.menuMultipleActions.removeButton(fabContinue);
-        mainActivity.menuMultipleActions.removeButton(fabReturn);
-        super.onPause();
+        mainActivity = ((MainActivity) getActivity());
+        mainActivity.menuMultipleActions.setVisibility(View.GONE);
+
+        return view;
     }
-    */
 }
