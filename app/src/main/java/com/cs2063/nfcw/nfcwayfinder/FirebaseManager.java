@@ -1,25 +1,17 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.util.Log;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.GenericTypeIndicator;
-import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
-import java.io.ByteArrayOutputStream;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.PriorityQueue;
 
 //import com.firebase.client.Firebase;
 
@@ -41,7 +33,8 @@ public class FirebaseManager
     }
 
     //Based on the building parameter, retrieve from Firebase all relevant rooms and then swap them.
-    public void getBuilding(final String building, final MainActivity mainActivity)
+    public void getBuilding(final String building, final String level, final String roomNumber,
+                            final MainActivity mainActivity)
     {
         Log.d(TAG, "getBuilding() called.");
         firebase.addListenerForSingleValueEvent(new ValueEventListener()
@@ -69,7 +62,7 @@ public class FirebaseManager
                         int x = Integer.parseInt(room.child("X").getValue().toString());
                         int y = Integer.parseInt(room.child("Y").getValue().toString());
                         roomMap.put(roomNumber, new Room(roomNumber, roomName, level, building,
-                                x/2, y/2));
+                                x / 2, y / 2));
                         Log.d(TAG, "Building: " + building + "\tLevel: " + level + "\tRoom: " + roomNumber
                                 + "\tRoom Name: " + roomName + "\tX-Y: " + x/2 + "-" + y/2);
                     }
@@ -114,7 +107,8 @@ public class FirebaseManager
                     }
 
                 }
-                mainActivity.goToLocationFragment();
+                mainActivity.goToLocationFragment(roomMap.containsKey(roomNumber)?roomMap.get
+                        (roomNumber): null);
             }
 
             @Override
@@ -124,7 +118,7 @@ public class FirebaseManager
         });
     }
 
-    public ArrayList<Room> getPathTo(Room start, Room destination)
+    public ArrayList<Room> getPathToOriginal(Room start, Room destination)
     {
         ArrayList<Room> path = new ArrayList<>();
         if (start.compareTo(destination) == 0)
@@ -138,7 +132,7 @@ public class FirebaseManager
             if(e.visited == false)
             {
                 e.visited = true;
-                ArrayList<Room> childPath = getPathTo(e.otherEnd(start), destination);
+                ArrayList<Room> childPath = getPathToOriginal(e.otherEnd(start), destination);
                 if(childPath != null)
                 {
                     path.add(start);
@@ -148,5 +142,59 @@ public class FirebaseManager
             }
         }
         return path;
+    }
+    public ArrayList<Room> aStar(Room start, Room destination)
+    {
+        ArrayList<Room> closedList = new ArrayList<Room>();
+        PriorityQueue<Room> openList = new PriorityQueue<Room>(10, new RoomComparator());
+
+        int depth = 0;
+
+        start.distanceTravelled = depth;
+        start.parent = Room.getSingleton();
+        openList.add(start);
+        Log.d(TAG, "Starting node: " + start.roomName);
+
+        while(openList.size() > 0)
+        {
+            Room current = openList.peek();
+            Log.d(TAG, "Inspecting Room: " + current.roomName);
+            depth++;
+
+            if(destination.equals(current))
+            {
+                //Found goal node.
+                Log.d(TAG, "Found goal node: " + current.roomName);
+            }
+            else
+            {
+                //expand neighbors.
+                for (Edge e: current.neighbours)
+                {
+                    Room n = e.otherEnd(current);
+
+                    if (!openList.contains(n) && !closedList.contains(n))
+                    {
+                        //Not seen before.
+                        n.distanceTravelled = depth+1;
+                        openList.add(n);
+                        Log.d(TAG, "Never seen: " + n.roomName);
+                    }
+                    else if(openList.contains(n))
+                    {
+                        //Hasn't been evaluated yet, check to see if shorter path was found.
+                        if(n.distanceTravelled > depth + 1)
+                        {
+                            n.distanceTravelled = depth + 1;
+                            n.parent=current;
+                        }
+                    }
+                }
+            }
+            //remove expanded node from open -> close;
+            openList.remove(current);
+            closedList.add(current);
+        }
+        return null;
     }
 }
