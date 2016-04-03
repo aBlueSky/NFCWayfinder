@@ -274,7 +274,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void goToSecondFragment()
     {
-        FragmentSecondary f = new FragmentSecondary();
+        LocationFragment f = new LocationFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         ft.replace(R.id.fragment_location, f);
