@@ -30,7 +30,7 @@ public class FirebaseManager
 {
     private final static String TAG = "FirebaseManager";
     private Firebase firebase;
-    private HashMap<String, Room> roomMap;
+    public HashMap<String, Room> roomMap;
     private ArrayList<Edge> edgeList;
 
     public FirebaseManager()
@@ -65,11 +65,13 @@ public class FirebaseManager
                     for (DataSnapshot room : levels.child("Rooms").getChildren())
                     {
                         String roomNumber = room.getKey();
+                        String roomName = room.child("Name").getValue().toString();
                         int x = Integer.parseInt(room.child("X").getValue().toString());
                         int y = Integer.parseInt(room.child("Y").getValue().toString());
-                        roomMap.put(roomNumber, new Room(roomNumber, level, building));
+                        roomMap.put(roomNumber, new Room(roomNumber, roomName, level, building,
+                                x/2, y/2));
                         Log.d(TAG, "Building: " + building + "\tLevel: " + level + "\tRoom: " + roomNumber
-                                + "\tX-Y: " + x + "-" + y);
+                                + "\tRoom Name: " + roomName + "\tX-Y: " + x/2 + "-" + y/2);
                     }
 
                     Log.d(TAG, "Edges: ");
@@ -112,7 +114,7 @@ public class FirebaseManager
                     }
 
                 }
-                mainActivity.goToSecondFragment();
+                mainActivity.goToLocationFragment();
             }
 
             @Override
