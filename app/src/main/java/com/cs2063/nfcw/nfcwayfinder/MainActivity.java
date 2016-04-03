@@ -1,5 +1,6 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -264,5 +265,13 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.fragment_location, f);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        FragmentManager fm = getFragmentManager();
+        if(fm.getBackStackEntryCount() > 1) { fm.popBackStack(); }
+        else { super.onBackPressed(); }
     }
 }

@@ -1,6 +1,7 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,37 +20,34 @@ public class RoomPickerFragment extends Fragment {
     MainActivity mainActivity;
 
     FloatingActionButton fabContinue;
-    FloatingActionButton fabReturn;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered RoomPickerFragment onCreateView");
-        View view = inflater.inflate(R.layout.location_fragment, container, false);
+        View view = inflater.inflate(R.layout.room_picker_fragment, container, false);
         mainActivity = ((MainActivity) getActivity());
         mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
 
         fabContinue = new FloatingActionButton(mainActivity.getBaseContext());
-        fabContinue.setTitle("Navigate");
+        fabContinue.setTitle("Continue");
+        fabContinue.setIcon(R.drawable.forward_icon);
         fabContinue.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-
-            }
-        });
-
-        fabReturn = new FloatingActionButton(mainActivity.getBaseContext());
-        fabReturn.setTitle("Go Back");
-        fabReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
+                mainActivity.menuMultipleActions.collapse();
 
+                NavigationFragment f = new NavigationFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                ft.replace(R.id.fragment_location, f);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
 
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         //        android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.destination);
+        //AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.destination);
         //textView.setAdapter(adapter);
 
         return view;
@@ -58,14 +56,13 @@ public class RoomPickerFragment extends Fragment {
     @Override
     public void onResume() {
         mainActivity.menuMultipleActions.addButton(fabContinue);
-        mainActivity.menuMultipleActions.addButton(fabReturn);
         super.onResume();
     }
 
     @Override
     public void onPause() {
         mainActivity.menuMultipleActions.removeButton(fabContinue);
-        mainActivity.menuMultipleActions.removeButton(fabReturn);
         super.onPause();
     }
+
 }
