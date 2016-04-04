@@ -1,5 +1,7 @@
 package com.cs2063.nfcw.nfcwayfinder;
 
+import android.util.Log;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class Room implements Comparable
     String roomName = "None";
     int x = 0;
     int y = 0;
+    int type = -1;
     int distanceTravelled = -1;
     Room parent = null;//only for search use.
 
@@ -25,7 +28,8 @@ public class Room implements Comparable
     private Room() {}
 
     //Full constructor
-    public Room(String roomNumber, String roomName, String level, String building, int x, int y)
+    public Room(String roomNumber, String roomName, String level, String building, int x, int y,
+                int type)
     {
         this.building = building;
         this.level = level;
@@ -34,7 +38,9 @@ public class Room implements Comparable
         this.neighbours = new ArrayList<>();
         this.x = x;
         this.y = y;
-        this.distanceTravelled = 9999;
+        this.type = type;
+        this.parent = null;
+        this.distanceTravelled = -1;
     }
 
     public static Room getSingleton()
@@ -63,5 +69,34 @@ public class Room implements Comparable
             return 0;
         else
             return Integer.parseInt(this.roomNumber) > Integer.parseInt(((Room)room).roomNumber) ? 1 : -1;
+    }
+
+    public ArrayList<Room> getNeighbors()
+    {
+        ArrayList<Room> n = new ArrayList<>();
+        for (Edge e: neighbours)
+        {
+                n.add(e.otherEnd(this));
+        }
+        return n;
+    }
+
+    public ArrayList<Room> getParentPath(Room start)
+    {
+        ArrayList<Room> list = new ArrayList<>();
+        Room current = this;
+
+        while(current != start)
+        {
+            Log.d("Room", "" + current.roomName);
+            list.add(current);
+            current = parent;
+        }
+        if(current.compareTo(start)==0)
+        {
+            list.add(current);
+        }
+
+        return list;
     }
 }
