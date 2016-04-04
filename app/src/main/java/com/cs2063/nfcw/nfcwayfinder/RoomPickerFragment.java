@@ -21,9 +21,12 @@ import java.util.HashMap;
  * Created by beaul on 2016-03-28.
  */
 public class RoomPickerFragment extends Fragment {
+
     private static final String TAG = "RoomPickerFragment";
 
-    MainActivity mainActivity;
+    private MainActivity mainActivity;
+    private View view;
+
     ArrayList<String> roomStringList;
     HashMap<String, String> nameToRoomIDs;
     FloatingActionButton fabContinue;
@@ -31,7 +34,7 @@ public class RoomPickerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered RoomPickerFragment onCreateView");
-        View view = inflater.inflate(R.layout.room_picker_fragment, container, false);
+        view = inflater.inflate(R.layout.room_picker_fragment, container, false);
         mainActivity = ((MainActivity) getActivity());
         mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
 
@@ -78,11 +81,10 @@ public class RoomPickerFragment extends Fragment {
         });
 
         ArrayList<String> roomList = mainActivity.firebaseManager.visibleRoomIDs;
-        for (String id:roomList)
+        for (String id : roomList)
         {
-            Log.d(TAG, id);
             Room room = mainActivity.firebaseManager.roomMap.get(id);
-            Log.d(TAG, "Room name: " + room.roomName + " room id: "+room.roomNumber);
+            Log.d(TAG, "Room name: " + room.roomName + " room id: " + room.roomNumber);
             roomStringList.add(room.roomName);
             nameToRoomIDs.put(room.roomName, id);
         }

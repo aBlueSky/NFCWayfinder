@@ -11,6 +11,7 @@ import com.firebase.client.ValueEventListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -41,23 +42,23 @@ public class FirebaseManager
     public void getBuilding(final String building, final String level, final String roomNumber,
                             final MainActivity mainActivity)
     {
-        Log.d(TAG, "getBuilding() called.");
+        //Log.d(TAG, "getBuilding() called.");
         firebase.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                Log.d(TAG, "onDataChange() called.");
+                //Log.d(TAG, "onDataChange() called.");
                 roomMap.clear();
                 edgeList.clear();
                 visibleRoomIDs.clear();
 
                 DataSnapshot buildingSnapshot = dataSnapshot.child("Buildings").child(building);
-                Log.d(TAG, "Snapshot for building: " + building);
+                //Log.d(TAG, "Snapshot for building: " + building);
 
                 for (DataSnapshot levels : buildingSnapshot.child("Levels").getChildren())
                 {
-                    Log.d(TAG, "Rooms: ");
+                    //Log.d(TAG, "Rooms: ");
                     String level = levels.getKey();
                     for (DataSnapshot room : levels.child("Rooms").getChildren())
                     {
@@ -72,11 +73,11 @@ public class FirebaseManager
                         }
                         roomMap.put(roomNumber, new Room(roomNumber, roomName, level, building,
                                 x / 2, y / 2, type));
-                        Log.d(TAG, "Building: " + building + "\tLevel: " + level + "\tRoom: " + roomNumber
-                                + "\tRoom Name: " + roomName + "\tX-Y: " + x / 2 + "-" + y / 2);
+                        //Log.d(TAG, "Building: " + building + "\tLevel: " + level + "\tRoom: " + roomNumber
+                        //        + "\tRoom Name: " + roomName + "\tX-Y: " + x / 2 + "-" + y / 2);
                     }
 
-                    Log.d(TAG, "Edges: ");
+                    //Log.d(TAG, "Edges: ");
                     if (levels.child("Paths").getValue() != null)
                     {
                         GenericTypeIndicator<ArrayList<String>> t = new
@@ -87,7 +88,7 @@ public class FirebaseManager
                                 (t);
                         for (String concatenatedEdge : listOfConcatenatedEdges)
                         {
-                            Log.d(TAG, "Edge is: " + concatenatedEdge);
+                            //Log.d(TAG, "Edge is: " + concatenatedEdge);
                             String[] edgeEnds = concatenatedEdge.split("-");
                             Room firstEnd = (roomMap.containsKey(edgeEnds[0]) ? roomMap.get(edgeEnds[0])
                                                                               : null);
@@ -104,7 +105,7 @@ public class FirebaseManager
                     }
                     else
                     {
-                        Log.d(TAG, "Edge list for level " + level + " is empty.");
+                        //Log.d(TAG, "Edge list for level " + level + " is empty.");
                     }
                 }
 
@@ -114,8 +115,8 @@ public class FirebaseManager
                     String concatenatedEdge = path.getKey();
                     int accessFlag = Integer.parseInt(path.getValue().toString());
                     String[] edgeEnds = concatenatedEdge.split("-");
-                    Log.d(TAG, "Interconnected edge: " + concatenatedEdge + "isAccessible: " +
-                            (accessFlag == 1));
+                    //Log.d(TAG, "Interconnected edge: " + concatenatedEdge + "isAccessible: " +
+                    //        (accessFlag == 1));
                     Room firstEnd = (roomMap.containsKey(edgeEnds[0]) ? roomMap.get(edgeEnds[0])
                                                                       : null);
                     Room secondEnd = (roomMap.containsKey(edgeEnds[1]) ? roomMap.get(edgeEnds[1])
@@ -140,192 +141,86 @@ public class FirebaseManager
             }
         });
     }
-/*
-    public ArrayList<Room> getPathToOriginal(Room start, Room destination)
-    {
-        ArrayList<Room> path = new ArrayList<>();
-        if (start.compareTo(destination) == 0)
-        {
-            path.add(start);
-            return path;
-        }
-
-        for (Edge e : start.neighbours)
-        {
-            if (e.visited == false)
-            {
-                e.visited = true;
-                ArrayList<Room> childPath = getPathToOriginal(e.otherEnd(start), destination);
-                if (childPath != null)
-                {
-                    path.add(start);
-                    path.addAll(childPath);
-                    return path;
-                }
-            }
-        }
-        return path;
-    }
-
-    }*/
-    public ArrayList<Room> aStar(Room start, Room destination)
-    {
-        ArrayList<Room> closedList = new ArrayList<Room>();
-        PriorityQueue<Room> openList = new PriorityQueue<Room>();
-
-        int depth = 0;
-
-        start.distanceTravelled = depth;
-        start.parent = null;
-        openList.add(start);
-        Log.d(TAG, "Starting node: " + start.roomName);
-
-        while (openList.size() > 0)
-        {
-            Log.d(TAG, "---------------------------------------"+depth);
-            Room current = openList.peek();
-            Log.d(TAG, "Inspecting Room: " + current.roomName + " Value: " + current.distanceTravelled);
-            depth++;
-
-            if(destination.compareTo(current)==0)
-            {
-                //Found goal node.
-                Log.d(TAG, "**** Found goal node: " + current.roomName);
-                ArrayList<Room> results = new ArrayList<>();
-
-                while (current.compareTo(start)==0)
-                {
-                    Log.d(TAG, current.roomName);
-                    results.add(0, current);
-                    current = current.parent;
-                }
-                if(!results.isEmpty()) { results.add(0,start);}
-                return results;
-            }
-            else
-            {
-                //expand neighbors.
-                for (Edge e : current.neighbours)
-                {
-                    Room n = e.otherEnd(current);
-                    if (!e.isAccessFriendly)
-                    {
-                        //todo add access check
-                    }
-                    if (!openList.contains(n) && !closedList.contains(n))
-                    {
-                        //Not seen before.
-                        n.distanceTravelled = depth+1;
-                        n.parent = current;
-                        openList.add(n);
-                        Log.d(TAG, "Never seen: " + n.roomName);
-                    }
-                    else if (openList.contains(n))
-                    {
-                        //Hasn't been evaluated yet, check to see if shorter path was found.
-                        if (n.distanceTravelled > depth + 1)
-                        {
-                            Log.d(TAG, "Found a shorter path for " + n.roomName + "["+n
-                                    .distanceTravelled+"->"+(depth+1)+"]");
-                            n.distanceTravelled = depth + 1;
-                            n.parent = current;
-                        }
-                    }
-                }
-            }
-            //remove expanded node from open -> close;
-            openList.remove(current);
-            closedList.add(current);
-        }
-        return null;
-    }
-
-    public ArrayList<Room> findPath(Room start, Room dest)
-    {
-        PriorityQueue<WeightedRoom> openList = new PriorityQueue<>();
-        ArrayList<WeightedRoom> closedList = new ArrayList<>();
-
-        WeightedRoom wStart = new WeightedRoom(start, 0, null);
-        openList.add(wStart);
-        int dL = Integer.parseInt(dest.getLevel());
-        int depth = 0;
-
-        while(!openList.isEmpty())
-        {
-            WeightedRoom current = openList.peek();
-            Log.d(TAG, current.room.roomName + "");
-            openList.remove(current);
-            //closedList.add(current);
-
-            ArrayList<Room> neighbors = current.room.getNeighbors();
-            ArrayList<WeightedRoom> wNeighbors = new ArrayList<>();
-            for (Room r: neighbors)
-            {
-                r.parent = current.room;
-                wNeighbors.add(new WeightedRoom(r, 999999, current.room));
-            }
-            for (WeightedRoom r: wNeighbors)
-            {
-                if(r.room.compareTo(dest) == 0)
-                {
-                    Log.d(TAG, "Arrived at Finish");
-                    ArrayList<Room> results = new ArrayList<>();
-                    Room temp = r.room;
-                    results.add(temp);
-                    while(temp.parent != null)
-                    {
-                        Log.d(TAG, temp.parent.roomName);
-                        results.add(0, temp.parent);
-                        temp = temp.parent;
-                    }
-                    Log.d(TAG, "Returning from search alg.");
-                    return results;
-                }
-                int f;
-                double g = current.distanceTravelled
-                        + Math.sqrt(Math.pow(r.room.x - current.room.x, 2)
-                                    + Math.pow(r.room.y - current.room.y, 2));
-
-                int rL = Integer.parseInt(r.room.getLevel());
-                int h = (rL == dL?0 : 1000 * (Math.abs(rL - dL)));
-                h+=depth * 100;
-
-                f = (int)(g + h);
-
-                if(openList.contains(r))
-                {
-                    //Update the r in the open list.
-                    if(f < r.distanceTravelled){r.distanceTravelled = f;}
-                }
-                else if(closedList.contains(r))
-                {
-                    //Update the r in the closed list.
-                    if(f < r.distanceTravelled){r.distanceTravelled = f;}
-                }
-                else
-                {
-                    r.distanceTravelled = f;
-                    openList.add(r);
-                    Log.d(TAG, "added " + r.room.roomName + " distance: " + f);
-                }
-            }
-            closedList.add(current);
-            depth++;
-        }
-        return null;
-    }
 
     public class WeightedRoom
     {
+        WeightedRoom parent;
         Room room;
-        int distanceTravelled;
-        Room parent;
+        int g;
+        int h;
+        int f;
 
-        public WeightedRoom(Room r, int distanceTravelled, Room parent)
+        public WeightedRoom(Room r, WeightedRoom parent)
         {
             this.room = r;
-            this.distanceTravelled = distanceTravelled;
             this.parent = parent;
         }
+    }
+
+    public int estimateDistance(Room room1, Room room2)
+    {
+        return Math.abs(room1.x - room2.x) + Math.abs(room1.y - room2.y);
+    }
+
+    public ArrayList<Room> findPath(Room start, Room goal) {
+        Set<WeightedRoom> open = new HashSet<>();
+        Set<WeightedRoom> closed = new HashSet<>();
+
+        int goalFloor = Integer.parseInt(goal.getLevel());
+
+        WeightedRoom wStart = new WeightedRoom(start, null);
+        wStart.g = 0;
+        wStart.h = estimateDistance(start, goal);
+        wStart.f = wStart.h;
+
+        open.add(wStart);
+
+        while (open.size() > 0) {
+            WeightedRoom current = null;
+
+            for (WeightedRoom wRoom : open) {
+                if (current == null || wRoom.f < current.f) {
+                    current = wRoom;
+                }
+            }
+
+            if (current.room.getRoomNumber() == goal.getRoomNumber()) {
+                //Success
+                ArrayList<Room> path = new ArrayList<>();
+                path.add(current.room);
+                while (current.parent != null) {
+                    current = current.parent;
+                    path.add(0, current.room);
+                }
+
+                return path;
+            }
+
+            open.remove(current);
+            closed.add(current);
+
+            ArrayList<Room> neighbors = current.room.getNeighbors();
+            ArrayList<WeightedRoom> wNeighbors = new ArrayList<>();
+            for (Room room : neighbors) {
+                wNeighbors.add(new WeightedRoom(room, current));
+            }
+            for (WeightedRoom wRoom : wNeighbors) {
+                int nextG = current.g + estimateDistance(current.room, wRoom.room);
+
+                if (nextG < wRoom.g) {
+                    open.remove(wRoom);
+                    closed.remove(wRoom);
+                }
+
+                if (!open.contains(wRoom) && !closed.contains(wRoom)) {
+                    wRoom.g = nextG;
+                    wRoom.h = estimateDistance(wRoom.room, goal) + 1000 * Math.abs(goalFloor - Integer.parseInt(wRoom.room.getLevel()));
+                    wRoom.f = wRoom.g + wRoom.h;
+                    open.add(wRoom);
+                }
+            }
+        }
+
+        return new ArrayList<>();
     }
 }

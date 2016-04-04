@@ -14,10 +14,18 @@ public class DefaultFragment extends Fragment {
 
     private static final String TAG = "DefaultFragment";
 
+    private MainActivity mainActivity;
+    private View view;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered DefaultFragment onCreateView");
-        ((MainActivity)getActivity()).menuMultipleActions.setVisibility(View.GONE);
-        return inflater.inflate(R.layout.default_fragment, container, false);
+
+        mainActivity = ((MainActivity) getActivity());
+        mainActivity.menuMultipleActions.setVisibility(View.GONE);
+
+        view = inflater.inflate(R.layout.default_fragment, container, false);
+
+        return view;
     }
 }

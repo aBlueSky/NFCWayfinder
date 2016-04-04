@@ -12,17 +12,20 @@ import android.view.ViewGroup;
  */
 public class AboutFragment extends Fragment
 {
-    MainActivity mainActivity;
-
     private static final String TAG = "AboutFragment";
+
+    private MainActivity mainActivity;
+    private View view;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered AboutFragment onCreateView");
 
+        view = inflater.inflate(R.layout.about_fragment, container, false);
+
         mainActivity = ((MainActivity) getActivity());
         mainActivity.menuMultipleActions.setVisibility(View.GONE);
 
-        return inflater.inflate(R.layout.about_fragment, container, false);
+        return view;
     }
 }
