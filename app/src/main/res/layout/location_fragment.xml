@@ -50,5 +50,14 @@
             android:id="@+id/lbl_room_info"
             android:layout_gravity="left|center_horizontal"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="112dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/room_info" />
+
     </LinearLayout>
 </ScrollView>

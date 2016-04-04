@@ -29,9 +29,11 @@ public class FirebaseManager
     public HashMap<String, Room> roomMap;
     public ArrayList<String> visibleRoomIDs;
     private ArrayList<Edge> edgeList;
+    private MainActivity mainActivity;
 
-    public FirebaseManager()
+    public FirebaseManager(MainActivity mIn)
     {
+        mainActivity = mIn;
         firebase = new Firebase("https://nfcwayfinder.firebaseio.com/");
         roomMap = new HashMap<>();
         visibleRoomIDs = new ArrayList<String>();
@@ -67,12 +69,13 @@ public class FirebaseManager
                         int x = Integer.parseInt(room.child("X").getValue().toString());
                         int y = Integer.parseInt(room.child("Y").getValue().toString());
                         int type = Integer.parseInt(room.child("type").getValue().toString());
+                        String info = room.child("Info").getValue().toString();
                         if (type == 1)
                         {
                             visibleRoomIDs.add(roomNumber);
                         }
                         roomMap.put(roomNumber, new Room(roomNumber, roomName, level, building,
-                                x / 2, y / 2, type));
+                                x / 2, y / 2, type, info));
                         //Log.d(TAG, "Building: " + building + "\tLevel: " + level + "\tRoom: " + roomNumber
                         //        + "\tRoom Name: " + roomName + "\tX-Y: " + x / 2 + "-" + y / 2);
                     }
@@ -202,7 +205,8 @@ public class FirebaseManager
             ArrayList<Room> neighbors = current.room.getNeighbors();
             ArrayList<WeightedRoom> wNeighbors = new ArrayList<>();
             for (Room room : neighbors) {
-                wNeighbors.add(new WeightedRoom(room, current));
+                if(room.type == 3 && mainActivity.accessibilityFlag) { continue; }
+                else { wNeighbors.add(new WeightedRoom(room, current)); }
             }
             for (WeightedRoom wRoom : wNeighbors) {
                 int nextG = current.g + estimateDistance(current.room, wRoom.room);
