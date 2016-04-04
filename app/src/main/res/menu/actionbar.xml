@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_maps"
+    <!--<item android:id="@+id/action_maps"
         android:title="@string/action_maps"
         android:orderInCategory="1"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
     <item android:id="@+id/action_access"
         android:title="@string/action_access"

@@ -69,36 +69,8 @@ public class MainActivity extends AppCompatActivity
 
         //Floating Action Button Start--------------------------------------------------------------
 
-        /*
-        actionB = findViewById(R.id.action_b);
-        assert actionB != null;
-
-        actionC = new FloatingActionButton(getBaseContext());
-        actionC.setTitle("Hide/Show Action above");
-        actionC.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
-            }
-        });
-        */
-
         menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
         assert menuMultipleActions != null;
-        /*
-        menuMultipleActions.addButton(actionC);
-
-        actionA = (FloatingActionButton) findViewById(R.id.action_a);
-        assert actionA != null;
-        actionA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                actionA.setTitle("Action A clicked");
-            }
-        });
-        */
 
         //Floating Action Button End----------------------------------------------------------------
 
@@ -130,35 +102,12 @@ public class MainActivity extends AppCompatActivity
         ft.add(R.id.fragment_location, f);
         ft.addToBackStack(null);
         ft.commit();
-
-        Log.d(TAG, "calling get Building()");
-        firebaseManager.getBuilding("Convention Centre", "1", "101", this);
-        Log.d(TAG, "done calling get building");
-        Room s = firebaseManager.roomMap.get("101");
-        Room d = firebaseManager.roomMap.get("201");
-        Log.d(TAG, "s: " + (s != null? s.roomName: "null"));
-        Log.d(TAG, "d: " + (d != null? d.roomName: "null"));
-        ArrayList<Room> results = new ArrayList<>();
-        if(s!=null & d != null)
-        {
-            results = firebaseManager.aStar(s,d);
-        }
-        Log.d(TAG, "done calling a star()");
-        Log.d(TAG, "Size of results: " + results.size());
-        if(!results.isEmpty())
-        {
-            for(int i = 0; i < results.size(); i++)
-            {
-                Log.d(TAG, "" + results.get(i).roomName);
-            }
-        }
-
     }
 
     @Override
     protected void onResume()
     {
-        Log.d(TAG, "onResume() called.");
+        //Log.d(TAG, "onResume() called.");
         super.onResume();
         //re-enable foreground dispatch since app is now running.
         if (nfcAdpt != null)
@@ -170,7 +119,7 @@ public class MainActivity extends AppCompatActivity
     // process upon successful tags.
     private void handleIntent(Intent intent)
     {
-        Log.d(TAG, "Handling nfc intent.");
+        Log.d(TAG, "Handling NFC Intent");
         if (intent == null) return;
 
         String action = intent.getAction();
@@ -215,12 +164,12 @@ public class MainActivity extends AppCompatActivity
      */
     public void handleNFCPayload(String nfcTagContent)
     {
-        Log.d(TAG, "handleNFCPayload() called.");
-       // if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
+        //Log.d(TAG, "handleNFCPayload() called.");
+        //if (mText != null) mText.setText("Discovered tag " + ++mCount + ": " + nfcTagContent);
         String[] tokens = nfcTagContent.split("-");
-        for (String t: tokens) {
-            Log.d(TAG, "Token: " + t);
-        }
+        //for (String t: tokens) {
+        //    Log.d(TAG, "Token: " + t);
+        //}
         firebaseManager.getBuilding(tokens[0], tokens[1], tokens[2], this);
     }
 
@@ -234,9 +183,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_maps:
+            //case R.id.action_maps:
 
-                return true;
+            //    return true;
 
             case R.id.action_access:
                 MenuItem access = myToolbar.getMenu().getItem(1);
@@ -263,11 +212,6 @@ public class MainActivity extends AppCompatActivity
     public void goToLocationFragment(Room taggedRoom)
     {
         if(taggedRoom == null) return;
-        Log.d(TAG, "Testing path calc");//TODO Remove when destination choice has been added.
-        Room s = firebaseManager.roomMap.get("101");
-        Room d = firebaseManager.roomMap.get("201");
-
-        firebaseManager.aStar(s, d);
 
         LocationFragment f = new LocationFragment();
         Bundle bundle = new Bundle();
@@ -278,17 +222,6 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.fragment_location, f);
         ft.addToBackStack(null);
         ft.commit();
-
-        ArrayList<Room> results = firebaseManager.aStar(s,d);
-        Log.d(TAG, "done calling a star()");
-        Log.d(TAG, "Size of results: " + results.size());
-        if(!results.isEmpty())
-        {
-            for(int i = 0; i < results.size(); i++)
-            {
-                Log.d(TAG, "" + results.get(i).roomName);
-            }
-        }
     }
 
     @Override

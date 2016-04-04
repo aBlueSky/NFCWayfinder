@@ -75,11 +75,14 @@ public class NdefReaderTask extends AsyncTask<Tag, Void, String>
          * bit_6 reserved for future use, must be 0
          * bit_5..0 length of IANA language code
          */
-        Log.d(TAG, "readText()");
+        //Log.d(TAG, "readText()");
+        String eight = "UTF-8";
+        String sixteen = "UTF-16";
+
         byte[] payload = record.getPayload();
 
         //Get Text Encoding
-        String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
+        String textEncoding = ((payload[0] & 128) == 0) ? eight : sixteen;
 
         //Get Language Code
         int languageCodeLength = payload[0] & 0063;

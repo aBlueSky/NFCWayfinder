@@ -20,8 +20,6 @@ public class Room implements Comparable
     int x = 0;
     int y = 0;
     int type = -1;
-    int distanceTravelled = -1;
-    Room parent = null;//only for search use.
 
     public ArrayList<Edge> neighbours;
     // Empty Constructor
@@ -39,8 +37,6 @@ public class Room implements Comparable
         this.x = x;
         this.y = y;
         this.type = type;
-        this.parent = null;
-        this.distanceTravelled = -1;
     }
 
     public static Room getSingleton()
@@ -79,24 +75,5 @@ public class Room implements Comparable
                 n.add(e.otherEnd(this));
         }
         return n;
-    }
-
-    public ArrayList<Room> getParentPath(Room start)
-    {
-        ArrayList<Room> list = new ArrayList<>();
-        Room current = this;
-
-        while(current != start)
-        {
-            Log.d("Room", "" + current.roomName);
-            list.add(current);
-            current = parent;
-        }
-        if(current.compareTo(start)==0)
-        {
-            list.add(current);
-        }
-
-        return list;
     }
 }

@@ -2,13 +2,11 @@ package com.cs2063.nfcw.nfcwayfinder;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,19 +22,20 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
  */
 public class LocationFragment extends Fragment
 {
-    MainActivity mainActivity;
+    private static final String TAG = "LocationFragment";
+
+    private MainActivity mainActivity;
+    private View view;
 
     FloatingActionButton fabNavigate;
     FloatingActionButton fabViewMap;
-
-    private static final String TAG = "LocationFragment";
 
     private Room currentLocation;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         Log.d(TAG, "Entered LocationFragment onCreateView");
-        View view = inflater.inflate(R.layout.location_fragment, container, false);
+        view = inflater.inflate(R.layout.location_fragment, container, false);
         Bundle bundle = getArguments();
         String roomNumber = bundle.getString("RoomNum");
 
@@ -50,7 +49,7 @@ public class LocationFragment extends Fragment
         ImageView imageView = (ImageView) view.findViewById(R.id.mapView);
         if (currentLocation == null)
         {
-            imageView.setImageResource(R.drawable.first_floor3);
+            imageView.setImageResource(R.drawable.first_floor);
             TextView lblRoomName = (TextView)view.findViewById(R.id.room_name);
             lblRoomName.setText("Room invalid.");
         }
@@ -62,13 +61,13 @@ public class LocationFragment extends Fragment
             switch (level)
             {
                 case 1:
-                    drawable = R.drawable.first_floor3;
+                    drawable = R.drawable.first_floor;
                     break;
                 case 2:
                     drawable = R.drawable.second_floor;
                     break;
                 default:
-                    drawable = R.drawable.first_floor3;
+                    drawable = R.drawable.first_floor;
                     break;
             }
             lblRoomName.setText(""+currentLocation.roomName);
@@ -128,6 +127,12 @@ public class LocationFragment extends Fragment
             public void onClick(View v) {
                 mainActivity.menuMultipleActions.collapse();
 
+                MapFragment f = new MapFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                ft.replace(R.id.fragment_location, f);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
         return view;
