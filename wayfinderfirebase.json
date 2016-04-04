@@ -15,7 +15,8 @@
               "Name" : "Administration/Reception",
               "X" : 1126,
               "Y" : 578,
-              "type" : 1
+              "type" : 1,
+              "info" : "Date\n9:00-10:30\nEvent name\n"
             },
             "103" : {
               "Name" : "Business Centre",
@@ -45,7 +46,8 @@
               "Name" : "Marysville Room B",
               "X" : 692,
               "Y" : 1590,
-              "type" : 1
+              "type" : 1,
+              "info" : "Date\n9:00-10:30\nEvent name\n"
             },
             "108" : {
               "Name" : "Lincoln Room A",
@@ -75,7 +77,8 @@
               "Name" : "Barker's Point Room A",
               "X" : 984,
               "Y" : 1020,
-              "type" : 1
+              "type" : 1,
+              "info" : "Date\n9:00-10:30\nEvent name\n"
             },
             "113" : {
               "Name" : "Barker's Point Room B",
@@ -93,7 +96,8 @@
               "Name" : "Devon Room",
               "X" : 765,
               "Y" : 1085,
-              "type" : 1
+              "type" : 1,
+              "info" : "Date\n9:00-10:30\nEvent name\n"
             },
             "116" : {
               "Name" : "Corner A",
@@ -194,7 +198,8 @@
               "Name" : "Pointe Sainte-Anne Room A",
               "X" : 1239,
               "Y" : 1618,
-              "type" : 1
+              "type" : 1,
+              "info" : "Date\n9:00-10:30\nEvent name\n"
             },
             "202" : {
               "Name" : "Pointe Sainte-Anne Room B",
@@ -212,7 +217,8 @@
               "Name" : "Pointe Sainte-Anne Room D",
               "X" : 805,
               "Y" : 455,
-              "type" : 1
+              "type" : 1,
+              "info" : "Date\n9:00-10:30\nEvent name\n"
             },
             "205" : {
               "Name" : "Corner A",
