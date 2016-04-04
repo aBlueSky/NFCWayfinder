@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
 
     //Main Activity controls
     public Toolbar myToolbar;
+    public boolean accessibilityFlag;
     public FloatingActionsMenu menuMultipleActions;
 
     //TODO: testing purposes, kill later.
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         //mText = (TextView) findViewById(R.id.nfcTagText);//TODO remove this preview of the tag.
 
         Firebase.setAndroidContext(getApplicationContext());
-        firebaseManager = new FirebaseManager();//Initialise Firebase Manager.
+        firebaseManager = new FirebaseManager(this);//Initialise Firebase Manager.
 
         nfcAdpt = NfcAdapter.getDefaultAdapter(this);
         // Create a generic PendingIntent that will be deliver to this activity.
@@ -191,6 +192,7 @@ public class MainActivity extends AppCompatActivity
                 MenuItem access = myToolbar.getMenu().getItem(1);
                 if(access.isChecked()) { access.setChecked(false); }
                 else { access.setChecked(true); }
+                accessibilityFlag = access.isChecked();
                 return true;
 
             case R.id.action_about:

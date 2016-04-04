@@ -49,7 +49,8 @@ public class LocationFragment extends Fragment
         ImageView imageView = (ImageView) view.findViewById(R.id.mapView);
         if (currentLocation == null)
         {
-            imageView.setImageResource(R.drawable.first_floor);
+            //imageView.setImageResource(R.drawable.first_floor);
+            imageView.setVisibility(View.GONE);
             TextView lblRoomName = (TextView)view.findViewById(R.id.room_name);
             lblRoomName.setText("Room invalid.");
         }
@@ -58,6 +59,7 @@ public class LocationFragment extends Fragment
             int level = Integer.parseInt(currentLocation.getLevel());
             int drawable;
             TextView lblRoomName = (TextView)view.findViewById(R.id.room_name);
+            TextView lblRoomInfo = (TextView)view.findViewById(R.id.room_info);
             switch (level)
             {
                 case 1:
@@ -71,6 +73,7 @@ public class LocationFragment extends Fragment
                     break;
             }
             lblRoomName.setText(""+currentLocation.roomName);
+            lblRoomInfo.setText(""+currentLocation.info);
 
             BitmapFactory.Options myOptions = new BitmapFactory.Options();
             myOptions.inDither = true;
@@ -135,6 +138,8 @@ public class LocationFragment extends Fragment
                 ft.commit();
             }
         });
+
+
         return view;
     }
 

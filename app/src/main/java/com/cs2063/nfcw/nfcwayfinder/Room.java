@@ -20,6 +20,7 @@ public class Room implements Comparable
     int x = 0;
     int y = 0;
     int type = -1;
+    String info = "None";
 
     public ArrayList<Edge> neighbours;
     // Empty Constructor
@@ -27,7 +28,7 @@ public class Room implements Comparable
 
     //Full constructor
     public Room(String roomNumber, String roomName, String level, String building, int x, int y,
-                int type)
+                int type, String info)
     {
         this.building = building;
         this.level = level;
@@ -37,6 +38,7 @@ public class Room implements Comparable
         this.x = x;
         this.y = y;
         this.type = type;
+        this.info = info;
     }
 
     public static Room getSingleton()
@@ -56,7 +58,9 @@ public class Room implements Comparable
 
     public String getRoomNumber() { return roomNumber; }
 
-    public String getRoomName() {return  roomName;}
+    public String getRoomName() { return roomName; }
+
+    public String getRoomInfo() { return info; }
 
     @Override
     //This allows rooms to be compared and ordered against each other by room number.
