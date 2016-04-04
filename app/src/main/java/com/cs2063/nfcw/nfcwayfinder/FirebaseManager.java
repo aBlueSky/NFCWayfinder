@@ -132,7 +132,7 @@ public class FirebaseManager
             }
         });
     }
-
+/*
     public ArrayList<Room> getPathToOriginal(Room start, Room destination)
     {
         ArrayList<Room> path = new ArrayList<>();
@@ -157,7 +157,7 @@ public class FirebaseManager
             }
         }
         return path;
-    }
+    }*/
     public ArrayList<Room> aStar(Room start, Room destination)
     {
         ArrayList<Room> closedList = new ArrayList<Room>();
@@ -166,20 +166,31 @@ public class FirebaseManager
         int depth = 0;
 
         start.distanceTravelled = depth;
-        start.parent = Room.getSingleton();
+        start.parent = null;
         openList.add(start);
         Log.d(TAG, "Starting node: " + start.roomName);
 
         while(openList.size() > 0)
         {
+            Log.d(TAG, "---------------------------------------"+depth);
             Room current = openList.peek();
-            Log.d(TAG, "Inspecting Room: " + current.roomName);
+            Log.d(TAG, "Inspecting Room: " + current.roomName + " Value: " + current.distanceTravelled);
             depth++;
 
-            if(destination.equals(current))
+            if(destination.compareTo(current)==0)
             {
                 //Found goal node.
-                Log.d(TAG, "Found goal node: " + current.roomName);
+                Log.d(TAG, "**** Found goal node: " + current.roomName);
+                ArrayList<Room> results = new ArrayList<>();
+
+                while (current.compareTo(start)==0)
+                {
+                    Log.d(TAG, current.roomName);
+                    results.add(0, current);
+                    current = current.parent;
+                }
+                if(!results.isEmpty()) { results.add(0,start);}
+                return results;
             }
             else
             {
@@ -195,6 +206,7 @@ public class FirebaseManager
                     {
                         //Not seen before.
                         n.distanceTravelled = depth+1;
+                        n.parent = current;
                         openList.add(n);
                         Log.d(TAG, "Never seen: " + n.roomName);
                     }
@@ -203,6 +215,8 @@ public class FirebaseManager
                         //Hasn't been evaluated yet, check to see if shorter path was found.
                         if(n.distanceTravelled > depth + 1)
                         {
+                            Log.d(TAG, "Found a shorter path for " + n.roomName + "["+n
+                                    .distanceTravelled+"->"+(depth+1)+"]");
                             n.distanceTravelled = depth + 1;
                             n.parent=current;
                         }

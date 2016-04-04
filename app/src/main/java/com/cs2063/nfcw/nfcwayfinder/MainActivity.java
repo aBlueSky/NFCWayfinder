@@ -27,6 +27,7 @@ import android.view.View;
 import com.firebase.client.Firebase;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -129,6 +130,28 @@ public class MainActivity extends AppCompatActivity
         ft.add(R.id.fragment_location, f);
         ft.addToBackStack(null);
         ft.commit();
+
+        Log.d(TAG, "calling get Building()");
+        firebaseManager.getBuilding("Convention Centre", "1", "101", this);
+        Log.d(TAG, "done calling get building");
+        Room s = firebaseManager.roomMap.get("101");
+        Room d = firebaseManager.roomMap.get("201");
+        Log.d(TAG, "s: " + (s != null? s.roomName: "null"));
+        Log.d(TAG, "d: " + (d != null? d.roomName: "null"));
+        ArrayList<Room> results = new ArrayList<>();
+        if(s!=null & d != null)
+        {
+            results = firebaseManager.aStar(s,d);
+        }
+        Log.d(TAG, "done calling a star()");
+        Log.d(TAG, "Size of results: " + results.size());
+        if(!results.isEmpty())
+        {
+            for(int i = 0; i < results.size(); i++)
+            {
+                Log.d(TAG, "" + results.get(i).roomName);
+            }
+        }
 
     }
 
@@ -244,7 +267,7 @@ public class MainActivity extends AppCompatActivity
         Room s = firebaseManager.roomMap.get("101");
         Room d = firebaseManager.roomMap.get("201");
 
-        firebaseManager.aStar(s,d);
+        firebaseManager.aStar(s, d);
 
         LocationFragment f = new LocationFragment();
         Bundle bundle = new Bundle();
@@ -255,6 +278,17 @@ public class MainActivity extends AppCompatActivity
         ft.replace(R.id.fragment_location, f);
         ft.addToBackStack(null);
         ft.commit();
+
+        ArrayList<Room> results = firebaseManager.aStar(s,d);
+        Log.d(TAG, "done calling a star()");
+        Log.d(TAG, "Size of results: " + results.size());
+        if(!results.isEmpty())
+        {
+            for(int i = 0; i < results.size(); i++)
+            {
+                Log.d(TAG, "" + results.get(i).roomName);
+            }
+        }
     }
 
     @Override
