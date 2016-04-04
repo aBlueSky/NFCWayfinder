@@ -5,10 +5,10 @@ import java.util.Comparator;
 /**
  * Created by Koves on 4/3/2016.
  */
-public class RoomComparator implements Comparator<Room>
+public class RoomComparator implements Comparator<FirebaseManager.WeightedRoom>
 {
     //For distance comparison.
-    public int compare(Room a, Room b)
+    public int compare(FirebaseManager.WeightedRoom a, FirebaseManager.WeightedRoom b)
     {
         if(a.distanceTravelled == b.distanceTravelled)
             return 0;

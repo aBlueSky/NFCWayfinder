@@ -240,11 +240,6 @@ public class MainActivity extends AppCompatActivity
     public void goToLocationFragment(Room taggedRoom)
     {
         if(taggedRoom == null) return;
-        Log.d(TAG, "Testing path calc");//TODO Remove when destination choice has been added.
-        Room s = firebaseManager.roomMap.get("101");
-        Room d = firebaseManager.roomMap.get("201");
-
-        firebaseManager.aStar(s,d);
 
         LocationFragment f = new LocationFragment();
         Bundle bundle = new Bundle();

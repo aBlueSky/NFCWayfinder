@@ -35,7 +35,7 @@ public class RoomPickerFragment extends Fragment {
         mainActivity = ((MainActivity) getActivity());
         mainActivity.menuMultipleActions.setVisibility(View.VISIBLE);
 
-        Bundle fromPreviousFragment = getArguments();
+        final Bundle fromPreviousFragment = getArguments();
 
         final AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.destination);
 
@@ -57,6 +57,11 @@ public class RoomPickerFragment extends Fragment {
                 {
                     NavigationFragment f = new NavigationFragment();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                    Bundle toNavigationFragment = fromPreviousFragment;
+                    toNavigationFragment.putString("DestinationLocationID", nameToRoomIDs.get
+                            (selectedDestination));
+                    f.setArguments(toNavigationFragment);
 
                     ft.replace(R.id.fragment_location, f);
                     ft.addToBackStack(null);
