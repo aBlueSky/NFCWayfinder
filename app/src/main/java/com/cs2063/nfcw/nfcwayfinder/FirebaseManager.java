@@ -187,6 +187,8 @@ public class FirebaseManager
                 }
             }
 
+            //Log.d(TAG, "" + current.room.roomName);
+
             if (current.room.getRoomNumber() == goal.getRoomNumber()) {
                 //Success
                 ArrayList<Room> path = new ArrayList<>();
@@ -218,13 +220,14 @@ public class FirebaseManager
 
                 if (!open.contains(wRoom) && !closed.contains(wRoom)) {
                     wRoom.g = nextG;
-                    wRoom.h = estimateDistance(wRoom.room, goal) + 1000 * Math.abs(goalFloor - Integer.parseInt(wRoom.room.getLevel()));
+                    wRoom.h = estimateDistance(wRoom.room, goal) + 10000 * Math.abs(goalFloor - Integer.parseInt(wRoom.room.getLevel()));
                     wRoom.f = wRoom.g + wRoom.h;
                     open.add(wRoom);
                 }
             }
         }
 
+        Log.d(TAG, "Search failed");
         return new ArrayList<>();
     }
 }
