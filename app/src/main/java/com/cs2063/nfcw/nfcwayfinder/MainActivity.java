@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity
             //    return true;
 
             case R.id.action_access:
-                MenuItem access = myToolbar.getMenu().getItem(1);
+                MenuItem access = myToolbar.getMenu().getItem(0);
                 if(access.isChecked()) { access.setChecked(false); }
                 else { access.setChecked(true); }
                 accessibilityFlag = access.isChecked();
